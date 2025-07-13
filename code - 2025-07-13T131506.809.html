@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מתווה ביקור ראשון - מפקחת בבית ספר יסודי</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Assistant', sans-serif;
+            background: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            direction: rtl;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .official-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .official-header .titles {
+            text-align: right;
+            color: #005a9c;
+        }
+
+        .official-header .titles h2 {
+            margin: 0;
+            font-size: 1.3em;
+            line-height: 1.4;
+            font-weight: 700;
+        }
+        
+        .official-header .emblem img {
+            width: 70px;
+            height: auto;
+        }
+
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #003865;
+            font-size: 2.4em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            color: #555;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .intro-section {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .intro-section p, .intro-section ul {
+            margin-bottom: 15px;
+        }
+        .intro-section ul {
+            padding-right: 25px;
+        }
+        .intro-section .notes {
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+
+        .main-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .content-section {
+            background: #fdfdff;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #eef;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-section h2 {
+            color: #003865;
+            margin-bottom: 20px;
+            font-size: 1.7em;
+            font-weight: 700;
+            border-bottom: 2px solid #66a3d1;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .category-title {
+            color: #005a9c;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .checklist-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .checklist-table th {
+            background: #eaf2f8;
+            color: #333;
+            padding: 12px;
+            text-align: center;
+            font-size: 0.9em;
+            font-weight: 600;
+            border-bottom: 2px solid #d0e0ed;
+        }
+
+        .checklist-table td {
+            padding: 15px 10px;
+            border-bottom: 1px solid #eef;
+            vertical-align: top;
+        }
+        
+        .checklist-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .checklist-table tr:hover {
+            background: #f8fbff;
+        }
+
+        .task-description {
+            font-size: 1em;
+            line-height: 1.5;
+        }
+        
+        .task-description ul {
+            padding-right: 20px;
+            margin-top: 5px;
+        }
+        
+        .checkbox-col {
+            text-align: center;
+            width: 60px;
+        }
+
+        .checkbox-col input {
+            transform: scale(1.3);
+            cursor: pointer;
+            accent-color: #005a9c;
+        }
+
+        .details-col {
+            width: 150px;
+        }
+
+        .details-col input {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-family: inherit;
+        }
+        
+        .single-column {
+            grid-column: 1 / -1;
+        }
+        
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: 600; }
+        .input-group input, .input-group textarea, .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1em;
+        }
+
+        .disclaimer {
+            background-color: #fef9e7;
+            border: 1px solid #f1c40f;
+            color: #7d6608;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+        
+        .btn {
+            background: #005a9c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            margin: 5px;
+        }
+        .btn:hover { background: #003865; }
+        .btn-success { background: #28a745; }
+        .btn-success:hover { background: #218838; }
+        
+        .added-items { margin-top: 20px; }
+        .added-item {
+            background: #f1f8e9;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 5px solid #689f38;
+            position: relative;
+        }
+        .added-item .delete-btn {
+            position: absolute; top: 10px; left: 10px; background: #e53935;
+            color: white; border: none; width: 22px; height: 22px;
+            border-radius: 50%; cursor: pointer; font-size: 14px;
+            line-height: 22px; text-align: center;
+        }
+        
+        .meeting-notes {
+            background: #fff8e1; border-left: 5px solid #ffc107;
+            padding: 20px; border-radius: 10px;
+        }
+        .meeting-notes h3 { color: #856404; margin-bottom: 15px; }
+        .meeting-notes ul { list-style: none; padding-right: 20px; }
+        .meeting-notes li { position: relative; padding: 5px 0; }
+        .meeting-notes li:before {
+            content: "•"; color: #ffc107; font-weight: bold;
+            position: absolute; right: -20px; top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+             .official-header {
+                flex-direction: column;
+                gap: 15px;
+             }
+            .main-sections { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="official-header">
+            <div class="titles">
+                <h2>משרד החינוך</h2>
+                <h2>המנהל הפדגוגי</h2>
+                <h2>האגף לחינוך יסודי</h2>
+            </div>
+            <div class="emblem">
+                <!-- LOGO EMBEDDED DIRECTLY INTO THE CODE TO PREVENT LOADING ISSUES -->
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAbFBMVEX///8zM2b29vgyMmT8/PwxMWP7+/0vLmTz8/k6O2v5+fvu7vUvL2TKy+TLy+Lu7/XAwN8xMWI5OWo7PGzGy+C/wN1qa4dMS38/QHDExN6wsMOTk7ybm7xWV4NJSH2eoL9ubYhxdYqeoMB+f7RjZId/gLWfnbQ3N2g1NWY+PGoqKmEAt/TxAAADjklEQVR4nO3d63aqOBSFYUpE5QWiiCjq7v//lVfAIAjGkBCKtrPW9+P5Hk7j3CQkX54dAAAAAAAAAAAAAIDP5Vfr8+tNbrfddFd2tFuvXl9ub/f6Vbr8XfrlO5E/xXfL4/L68rv9/vRrfVq/XA+L+K54XN7eL9eb+/1t3X693q63r8uyfB6fR/wXfK4+v1xu/7C8Xq8394v69Vn9dFmWP6/X+yM+F5/fX9ebz+9f1+v1/n4/X1eW5bPl9n7Ef8fT+vx2ff3k8nS5vN7f79eb+/35e1mWn5fb/RF/B//f4n793V6vH5frzaf1++Hy+n5Zlpfr5TH+6/gR/w3/+2X69fq5/P7J5fV6vfz+uby8X5bl9Xp7f8S/i++x/y//9+vH5ebL5fH6dVk+r9f7I/4rnhcAAAAA8Kb4EgAAAACAJ7EEAAAAAABPYgkAAAAAAJ7EEgAAAACAp7EEAAAAAABPYgkAAAAAAJ7EEgAAAACAp7GE4Hn55eWAl1eeyy8vIYTgffnl5YGXV57LLy8hhOB9+eXlgZdXnssvLyGE4H355eWBl1eeyy8vIYTgffnl5YGXV57LLy8hhOB9+eXlgZdXnssvLyGE4H355eWBl1eeyy8vIYTgffnl5YGXV57LLy8hhOB9+eXlgZdXnssvLyGE4H355eWBl1eeyy8vIYTgffnl5YGXV57LLy8hhOB9+eXlgZdXnssvLyGE4H355eWBl1eeyy8vIYTgffnl5YGXV57LLy8hhOB9+eXlgZdXnssvLyGE4H355eWBl1eeyy8vIYTgffnl5YGXV57LLy8hhOB9+eXlgZdXnssvLyGE4H355eWBl1eeyy8vIYTgffnl5YGXV57LLy8hhOB9+eXlgZdXnssvLyGE4H355eWBl1eeyy8vIYRg/fLKywMvrzwpv7yEEML35Zf7eGGlpPzyEkII35df7uOFlZLyy0sIIXxvvr+PV1ZKyS8vIYTwpvz+Pl5ZKSW/vIQQwpvy+ft4ZWUov7yEEMJ78/f7eGXlKL+8hBDC+/Lz9/HKylB+eQkhhMvLz88vLy8vLy8vLy+vH/k/80sIIYSvl//08srK/PL78stLCCF8L/+88srKzPzl9+WXlxDC9/LPK6+szMxvvr/88hJC+H75p5dXVmbmN5+ff3l5CSH0lVdeWZmZ33x+/uXlJYQQAAAAAHiNJQAAAAAAeBJLAAAAAADwJJYAAAAAAPBJLAAAAACAJ7EEAAAAAABPYgkAAAAAAJ7EEgAAAACAp7GE4Hn55eWAl1eeyy8vIYTgffnl5YGXV57LLy8hhOB9+eXlgZdXnssvLyGE4H355eWBl1eeyy8vIYQQAAAAAPAaSwAAAACAJ7EEAAAAAABPYgkAAAAAAJ7EEgAAAACAp7EEAAAAAABPYgkAAAAAAJ7EEgAAAAAAnoQFAAAAAAAAAB7gPwB2rA3Wv3jQAAAAAElFTkSuQmCC" alt="סמל משרד החינוך">
+            </div>
+        </div>
+
+        <header class="header">
+            <h1>דגשים לביקור ראשון של מפקחת – בהלימה למסמך ארגון הלמידה</h1>
+            <p class="subtitle">בבית ספר יסודי - שנת הלימודים תשפ"ו</p>
+        </header>
+
+        <div class="intro-section">
+            <p>מסמך זה מהווה כלי למפקחת ולמנהלת בית הספר לבחינת יישום הנחיות ארגון הלמידה. המסמך מכוון למיקוד השיח בביקור הראשון של מפקחת בית הספר - פתיחת שנה. המוצע במסמך זה הוא בבחינת הצעה וכל מפקחת תבחר את הרלוונטי, בהתאם למאפייני בית הספר ומטרות המפגש שהוגדרו עם הנהלת בית הספר.</p>
+            <strong>דגשים לביקור:</strong>
+            <ul>
+                <li>מוכנות בית הספר לפתיחת השנה בהיבטים מנהלתיים, ארגוניים ופדגוגיים</li>
+                <li>יישום מיטבי של מסמכי ארגון הלמידה</li>
+                <li>התמודדות עם אתגרים ומורכבויות בפתיחת שנה</li>
+            </ul>
+            <div class="notes">
+                <p>*מסמך זה אינו בא להחליף חומרים הרלוונטיים להיערכות לפתיחת שנת הלימודים וחוזרי מנכ"ל יש לוודא הימצאותם של חוזרים אלה בבית הספר במקום נגיש וידוע.</p>
+                <p>*כל הכתוב בלשון נקבה מכוון גם ללשון זכר</p>
+            </div>
+        </div>
+
+        <div class="content-section single-column" id="visit-details">
+            <h2>פרטי הביקור</h2>
+            <div class="input-group">
+                <label for="visitDate">תאריך הביקור:</label>
+                <input type="date" id="visitDate">
+            </div>
+            <div class="input-group">
+                <label for="supervisorName">שם המפקח/ת:</label>
+                <input type="text" id="supervisorName" placeholder="יש להשתמש בקוד מוסכם או ראשי תיבות">
+            </div>
+            <div class="input-group">
+                <label for="schoolName">שם בית הספר:</label>
+                <input type="text" id="schoolName" placeholder="יש להשתמש בקוד מוסכם או ראשי תיבות">
+            </div>
+            <div class="input-group">
+                <label for="authorityName">רשות:</label>
+                <input type="text" id="authorityName" placeholder="יש להשתמש בקוד מוסכם או ראשי תיבות">
+            </div>
+            <p class="disclaimer">
+                שימו לב: בהתאם להנחיות אבטחת מידע, אין להעלות פרטים מזהים. יש להשתמש בראשי תיבות או בסימני קוד מוסכמים בלבד.
+            </p>
+        </div>
+
+        <div class="main-sections">
+            
+            <!-- 1. ניהול פדגוגי -->
+            <div class="content-section single-column">
+                <h2>📚 1. ניהול פדגוגי</h2>
+                <table class="checklist-table">
+                    <thead>
+                        <tr>
+                            <th>פירוט המשימה</th>
+                            <th class="checkbox-col">קיים</th>
+                            <th class="checkbox-col">חלקי</th>
+                            <th class="checkbox-col">לא קיים</th>
+                            <th class="details-col">פירוט</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="task-description">המקצועות המסומנים בכחול נלמדים כתחום דעת לאורך כל השנה, כל שבוע ובכל שכבות הגיל</td><td><input type="radio" name="task1"></td><td><input type="radio" name="task1"></td><td><input type="radio" name="task1"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">כל המקצועות בארגון הלמידה נלמדים לאורך השנה בכל שכבות הגיל</td><td><input type="radio" name="task2"></td><td><input type="radio" name="task2"></td><td><input type="radio" name="task2"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">מקצועות הלימוד מצוינים במערכת השעות בשמותיהם, כפי שמפורט בארגון הלמידה</td><td><input type="radio" name="task3"></td><td><input type="radio" name="task3"></td><td><input type="radio" name="task3"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">כל שעות האורך השבועיות המחייבות נלמדות (כולל יוח"א, קרב)</td><td><input type="radio" name="task4"></td><td><input type="radio" name="task4"></td><td><input type="radio" name="task4"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">מוקצות שעות ייעודיות ללמידה רגשית-חברתית, כישורי חיים ומפתח הל"ב, בהלימה לשכבות הגיל</td><td><input type="radio" name="task5"></td><td><input type="radio" name="task5"></td><td><input type="radio" name="task5"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">מוקצות שעות מסל הטיפוח לקידום ה-STEM וקיימת תוכנית לצמצום פערים לימודיים</td><td><input type="radio" name="task6"></td><td><input type="radio" name="task6"></td><td><input type="radio" name="task6"></td><td><input type="text" placeholder="אופן ופירוט..."></td></tr>
+                        <tr><td class="task-description">שעות העברית משובצות במערכת השעות על פי הנחיית ארגון הלמידה (בחברה הערבית והדרוזית)</td><td><input type="radio" name="task7"></td><td><input type="radio" name="task7"></td><td><input type="radio" name="task7"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">מימוש האפשרות לנייד שעות מאשכול לאשכול</td><td><input type="radio" name="task8"></td><td><input type="radio" name="task8"></td><td><input type="radio" name="task8"></td><td><input type="text" placeholder="שיקולים, היקף..."></td></tr>
+                        <tr><td class="task-description">שובצו שעות העשרה בכל אחת משכבות הגיל</td><td><input type="radio" name="task9"></td><td><input type="radio" name="task9"></td><td><input type="radio" name="task9"></td><td><input type="text" placeholder="אילו תוכניות?"></td></tr>
+                        <tr><td class="task-description">בבי"ס מיפוי של תלמידים בתחום לימודי רגשי חברתי (כלי העוגן או אחר)</td><td><input type="radio" name="task10"></td><td><input type="radio" name="task10"></td><td><input type="radio" name="task10"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">בבי"ס תוכניות לצמצום פערים לימודיים (צומחים מחדש, תגבורים לימודים)</td><td><input type="radio" name="task11"></td><td><input type="radio" name="task11"></td><td><input type="radio" name="task11"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">שימוש בתוכנה לניהול פדגוגי (תל"פ):<ul><li>יש תוכנה בביה"ס</li><li>שובצו קבוצות לימוד, שיעורים ומורים</li><li>דיווח תדיר על נוכחות תלמידים</li></ul></td><td><input type="radio" name="task12"></td><td><input type="radio" name="task12"></td><td><input type="radio" name="task12"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">אישור תשלומי הורים באפיק</td><td><input type="radio" name="task13"></td><td><input type="radio" name="task13"></td><td><input type="radio" name="task13"></td><td><input type="text"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 2. שילוב בינה מלאכותית -->
+            <div class="content-section">
+                <h2>🤖 2. שילוב בינה מלאכותית</h2>
+                <table class="checklist-table">
+                    <tbody>
+                        <tr><td class="task-description">בי"ס מכיר את <a href="https://pop.education.gov.il/teaching-tools/ai-education/elementary" target="_blank">מחוון הכשירות</a></td><td><input type="radio" name="task14"></td><td><input type="radio" name="task14"></td><td><input type="radio" name="task14"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">בבי"ס תוכנית המשך ליישום כשירות בינה מלאכותית בקרב תלמידי כיתות ד'–ו' (4 משימות לתלמיד)</td><td><input type="radio" name="task15"></td><td><input type="radio" name="task15"></td><td><input type="radio" name="task15"></td><td><input type="text"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- 3. מתן מענים לאוכלוסיות מיוחדות -->
+            <div class="content-section">
+                <h2>👥 3. מתן מענים לאוכלוסיות מיוחדות</h2>
+                 <table class="checklist-table">
+                    <tbody>
+                        <tr><td class="task-description">בבי"ס תוכנית לימודים אישית (תל"א) מותאמת לכל זכאי שירותי החינוך המיוחדים</td><td><input type="radio" name="task16"></td><td><input type="radio" name="task16"></td><td><input type="radio" name="task16"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">תלמידים עולים: קיימת מצבת תלמידים, שובצה מורה בעלת הכשרה ייעודית, קיימת מערכת שעות מותאמת</td><td><input type="radio" name="task17"></td><td><input type="radio" name="task17"></td><td><input type="radio" name="task17"></td><td><input type="text" placeholder="אם לא, מדוע?"></td></tr>
+                        <tr><td class="task-description">תלמידים מחוננים: קיימת מצבת תלמידים מחוננים ומצטיינים, וקיים מערך תמיכה וליווי</td><td><input type="radio" name="task18"></td><td><input type="radio" name="task18"></td><td><input type="radio" name="task18"></td><td><input type="text"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 4. ביטחון, בטיחות והיערכות לחירום -->
+            <div class="content-section single-column">
+                <h2>🛡️ 4. ביטחון, בטיחות והיערכות לחירום</h2>
+                <div class="category-title">היערכות לחירום</div>
+                <table class="checklist-table">
+                    <tbody>
+                        <tr><td class="task-description">מינוי רכז ביטחון, בטיחות ושעת חירום</td><td><input type="radio" name="task19"></td><td><input type="radio" name="task19"></td><td><input type="radio" name="task19"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">קיים תיק ביטחון שטח וחירום מוסדי</td><td><input type="radio" name="task20"></td><td><input type="radio" name="task20"></td><td><input type="radio" name="task20"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">מינוי צוות צל"ח בית ספרי (לרבות תכנית לחירום)</td><td><input type="radio" name="task21"></td><td><input type="radio" name="task21"></td><td><input type="radio" name="task21"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">אישור בדיקת תקינות מרכיבי ביטחון (גדר, שערים, ביתן שומר, כריזה, מטפים, גלגלון)</td><td><input type="radio" name="task22"></td><td><input type="radio" name="task22"></td><td><input type="radio" name="task22"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">קיימות תוכניות חינוך לחירום ע"פ שכבות גיל, בתיאום פיקוד העורף</td><td><input type="radio" name="task23"></td><td><input type="radio" name="task23"></td><td><input type="radio" name="task23"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">ביצוע תרגילים: "הכי מוגן שיש" (שבוע ראשון), רעא"ד/שריפה (עד 30.9), חפץ חשוד (עד 30.10)</td><td><input type="radio" name="task24"></td><td><input type="radio" name="task24"></td><td><input type="radio" name="task24"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">סידורי האבטחה סוכמו עם הקב"ט הרשותי ונקבעו נהלים פנימיים (פתיחת שערים, כניסה ויציאה)</td><td><input type="radio" name="task25"></td><td><input type="radio" name="task25"></td><td><input type="radio" name="task25"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">אישור תוכנית הטיולים והפעילות החוץ בית ספרית כולל הנגשה</td><td><input type="radio" name="task26"></td><td><input type="radio" name="task26"></td><td><input type="radio" name="task26"></td><td><input type="text"></td></tr>
+                    </tbody>
+                </table>
+                <div class="category-title">ניהול הבטיחות</div>
+                <table class="checklist-table">
+                     <tbody>
+                        <tr><td class="task-description">מונתה ועדת בטיחות בית ספרית</td><td><input type="radio" name="task27"></td><td><input type="radio" name="task27"></td><td><input type="radio" name="task27"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">נקבעו מקומות למורים תורניים והם תודרכו בנוהל "מורים תורנים"</td><td><input type="radio" name="task28"></td><td><input type="radio" name="task28"></td><td><input type="radio" name="task28"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">מורים לחינוך גופני ולמדעים הונחו בהנחיות הבטיחות לפעילותם</td><td><input type="radio" name="task29"></td><td><input type="radio" name="task29"></td><td><input type="radio" name="task29"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">נקבעו נהלי "דיווח תאונה" ודיווח "כמעט ונפגע"</td><td><input type="radio" name="task30"></td><td><input type="radio" name="task30"></td><td><input type="radio" name="task30"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">בוצע מבדק בטיחות ע"י הרשות, ומפגעים וליקויים טופלו (כולל מתקני ספורט ומשחק)</td><td><input type="radio" name="task31"></td><td><input type="radio" name="task31"></td><td><input type="radio" name="task31"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">תשתיות בטיחות בתנועה ובחנייה סביב ביה"ס נבדקו ע"י הרשות המקומית</td><td><input type="radio" name="task32"></td><td><input type="radio" name="task32"></td><td><input type="radio" name="task32"></td><td><input type="text"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 5. תוכנית עבודה -->
+            <div class="content-section">
+                <h2>📈 5. תוכנית עבודה</h2>
+                <table class="checklist-table">
+                    <tbody>
+                        <tr><td class="task-description">בבי"ס תוכנית עבודה בית ספרית מקושרת משאבים</td><td><input type="radio" name="task33"></td><td><input type="radio" name="task33"></td><td><input type="radio" name="task33"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">תוכנית העבודה אושרה בוועדה מלווה</td><td><input type="radio" name="task34"></td><td><input type="radio" name="task34"></td><td><input type="radio" name="task34"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">פרוטוקול ועדה מלווה הועלה למערכת הגפ"ן</td><td><input type="radio" name="task35"></td><td><input type="radio" name="task35"></td><td><input type="radio" name="task35"></td><td><input type="text"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 6. הון אנושי -->
+            <div class="content-section">
+                <h2>👩‍🏫 6. הון אנושי</h2>
+                <table class="checklist-table">
+                    <tbody>
+                        <tr><td class="task-description">קיימת תוכנית פיתוח מקצועי למורים (השתלמות מוסדית, מפת פיתוח)</td><td><input type="radio" name="task36"></td><td><input type="radio" name="task36"></td><td><input type="radio" name="task36"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">נרכשו תחומי הדרכה ושובצו שגרות למפגש עם המדריכים</td><td><input type="radio" name="task37"></td><td><input type="radio" name="task37"></td><td><input type="radio" name="task37"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">קיימים מנגנונים, סדירויות ושגרות לקידום שלומות (well-being) וצוותי החינוך</td><td><input type="radio" name="task38"></td><td><input type="radio" name="task38"></td><td><input type="radio" name="task38"></td><td><input type="text"></td></tr>
+                        <tr><td class="task-description">קיים תהליך קליטה שיטתי ומוסדר למורים חדשים</td><td><input type="radio" name="task39"></td><td><input type="radio" name="task39"></td><td><input type="radio" name="task39"></td><td><input type="text"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+        
+        <!-- 7. שיח אישי -->
+        <div class="content-section single-column">
+             <h2>💬 7. שיח אישי בין המפקחת והמנהלת</h2>
+             <div class="meeting-notes">
+                <h3>דגשים לשיח:</h3>
+                <ul>
+                    <li>זיהוי מוקדם של צרכים - איתור תחומים הדורשים תמיכה או התערבות כבר בתחילת השנה</li>
+                    <li>מיקוד נושאים לתהליך הליווי</li>
+                    <li>זיהוי צרכים שהפיקוח יכול לסייע בהם</li>
+                    <li>רפלקציה משותפת על הביקור</li>
+                    <li>אחר</li>
+                </ul>
+             </div>
+        </div>
+
+        <!-- הוספת הערות -->
+        <div class="content-section single-column">
+            <h2>➕ הוספת הערות, חוזקות ונקודות לשיפור</h2>
+            <div class="input-group">
+                <label for="noteTitle">כותרת:</label>
+                <input type="text" id="noteTitle" placeholder="לדוגמה: מוכנות הכיתות, תוכנית שילוב...">
+            </div>
+            <div class="input-group">
+                <label for="noteDescription">תוכן:</label>
+                <textarea id="noteDescription" rows="4" placeholder="פירוט ההערה, ההתרשמות, המלצה להמשך..."></textarea>
+            </div>
+            <div class="input-group">
+                <label for="noteCategory">שיוך לקטגוריה:</label>
+                <select id="noteCategory">
+                    <option value="כללי">כללי</option>
+                    <option value="ניהול פדגוגי">1. ניהול פדגוגי</option>
+                    <option value="בינה מלאכותית">2. בינה מלאכותית</option>
+                    <option value="אוכלוסיות מיוחדות">3. אוכלוסיות מיוחדות</option>
+                    <option value="ביטחון ובטיחות">4. ביטחון ובטיחות</option>
+                    <option value="תוכנית עבודה">5. תוכנית עבודה</option>
+                    <option value="הון אנושי">6. הון אנושי</option>
+                    <option value="שיח אישי">7. שיח אישי</option>
+                </select>
+            </div>
+            <button class="btn btn-success" onclick="addNote()">הוסף הערה</button>
+            <div id="notesList" class="added-items"></div>
+        </div>
+        
+        <!-- הורדת דוח -->
+        <div class="content-section single-column" style="text-align: center;">
+            <h2>📥 הורדת סיכום ביקור (קובץ Word)</h2>
+            <p style="margin-bottom: 20px;">לחץ על הכפתור כדי להפיק מסמך Word עם ניתוח הממצאים, החוזקות והנקודות לחיזוק.</p>
+            <button class="btn" onclick="downloadReportAsDoc()">הפק והורד דוח</button>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #777; font-style: italic;">
+            בברכת שנה חדשה טובה ופוריה
+        </div>
+    </div>
+
+    <script>
+        // Set today's date on load
+        document.getElementById('visitDate').valueAsDate = new Date();
+
+        let notesData = [];
+        let noteCounter = 0;
+
+        function addNote() {
+            const title = document.getElementById('noteTitle').value.trim();
+            const description = document.getElementById('noteDescription').value.trim();
+            const category = document.getElementById('noteCategory').value;
+
+            if (!title || !description) {
+                alert('אנא מלא כותרת ותוכן להערה.');
+                return;
+            }
+
+            const note = {
+                id: ++noteCounter,
+                title: title,
+                description: description,
+                category: category || 'כללי',
+                timestamp: new Date().toLocaleString('he-IL')
+            };
+
+            notesData.push(note);
+            renderNotes();
+            document.getElementById('noteTitle').value = '';
+            document.getElementById('noteDescription').value = '';
+        }
+
+        function renderNotes() {
+            const container = document.getElementById('notesList');
+            container.innerHTML = notesData.map(note => `
+                <div class="added-item">
+                    <button class="delete-btn" onclick="deleteNote(${note.id})">×</button>
+                    <h4>${note.title} <small style="color:#555; font-weight:normal;">(${note.category})</small></h4>
+                    <p>${note.description.replace(/\n/g, '<br>')}</p>
+                    <small style="color: #666; font-style: italic;">נוסף ב: ${note.timestamp}</small>
+                </div>
+            `).join('');
+        }
+
+        function deleteNote(id) {
+            notesData = notesData.filter(note => note.id !== id);
+            renderNotes();
+        }
+        
+        function downloadReportAsDoc() {
+            // 1. Gather Data
+            const visitDate = new Date(document.getElementById('visitDate').value).toLocaleDateString('he-IL');
+            const supervisorName = document.getElementById('supervisorName').value.trim() || 'לא צוין';
+            const schoolName = document.getElementById('schoolName').value.trim() || 'לא צוין';
+            const authorityName = document.getElementById('authorityName').value.trim() || 'לא צוין';
+
+            const strengths = [];
+            const areasForImprovement = [];
+
+            document.querySelectorAll('.checklist-table tbody tr').forEach(row => {
+                const description = row.querySelector('.task-description').textContent.trim().replace(/\s+/g, ' ');
+                const detailsInput = row.querySelector('.details-col input');
+                const details = detailsInput ? detailsInput.value.trim() : '';
+                
+                let status = "לא סומן";
+                const radios = row.querySelectorAll('input[type="radio"]');
+                if (radios[0]?.checked) status = "קיים";
+                if (radios[1]?.checked) status = "חלקי";
+                if (radios[2]?.checked) status = "לא קיים";
+
+                let formattedItem = `<li><strong>${description}</strong>`;
+                if(details) {
+                    formattedItem += ` - ${details}`;
+                }
+                formattedItem += `</li>`;
+
+                if (status === "קיים") {
+                    strengths.push(formattedItem);
+                } else if (status === "חלקי" || status === "לא קיים") {
+                    let improvementItem = `<li><strong>${description}</strong> (סומן כ: ${status})`;
+                     if(details) {
+                        improvementItem += ` - ${details}`;
+                    }
+                    improvementItem += `</li>`;
+                    areasForImprovement.push(improvementItem);
+                }
+            });
+
+            // 2. Build HTML for Word Document
+            let htmlContent = `
+                <div style="direction: rtl; text-align: right; font-family: Arial, sans-serif;">
+                    <h1>סיכום ביקור מפקחת</h1>
+                    <table border="1" cellpadding="5" cellspacing="0" style="width:100%; border-collapse: collapse; margin-bottom: 20px;">
+                        <tr><td style="width:150px;"><strong>בית ספר:</strong></td><td>${schoolName}</td></tr>
+                        <tr><td><strong>רשות:</strong></td><td>${authorityName}</td></tr>
+                        <tr><td><strong>שם המפקח/ת:</strong></td><td>${supervisorName}</td></tr>
+                        <tr><td><strong>תאריך הביקור:</strong></td><td>${visitDate}</td></tr>
+                    </table>
+
+                    <h2>תובנות מהמיפוי - רכיבים שיושמו במלואם (חוזקות)</h2>
+                    ${strengths.length > 0 ? `<ul>${strengths.join('')}</ul>` : '<p>לא זוהו רכיבים שיושמו במלואם.</p>'}
+
+                    <h2>רכיבים לחיזוק או להטמעה</h2>
+                    ${areasForImprovement.length > 0 ? `<ul>${areasForImprovement.join('')}</ul>` : '<p>לא זוהו רכיבים הדורשים חיזוק.</p>'}
+                    
+                    <h2>הערות ותובנות נוספות מהמפקחת</h2>
+            `;
+
+            if (notesData.length > 0) {
+                htmlContent += '<ul>';
+                notesData.forEach(note => {
+                    htmlContent += `<li><strong>${note.title.replace(/</g, '&lt;').replace(/>/g, '&gt;')} (${note.category.replace(/</g, '&lt;').replace(/>/g, '&gt')}):</strong> ${note.description.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</li>`;
+                });
+                htmlContent += '</ul>';
+            } else {
+                htmlContent += '<p>לא נוספו הערות.</p>';
+            }
+
+            htmlContent += `</div>`;
+
+
+            // 3. Create and trigger download
+            const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
+                "xmlns:w='urn:schemas-microsoft-com:office:word' "+
+                "xmlns='http://www.w3.org/TR/REC-html40'>"+
+                "<head><meta charset='utf-8'><title>Word Export</title></head><body>";
+            const footer = "</body></html>";
+            const sourceHTML = header + htmlContent + footer;
+
+            const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+            const fileDownload = document.createElement("a");
+            document.body.appendChild(fileDownload);
+            fileDownload.href = source;
+            const safeSchoolName = schoolName.replace(/[^a-z0-9א-ת]/gi, '_') || 'ביקור';
+            fileDownload.download = `סיכום_ביקור_${safeSchoolName}_${new Date().toISOString().split('T')[0]}.doc`;
+            fileDownload.click();
+            document.body.removeChild(fileDownload);
+        }
+    </script>
+</body>
+</html>
