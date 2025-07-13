@@ -332,16 +332,7 @@
             <div class="content-section single-column">
                 <h2>📚 1. ניהול פדגוגי</h2>
                 <table class="checklist-table">
-                    <thead>
-                        <tr>
-                            <th>פירוט המשימה</th>
-                            <th class="checkbox-col">קיים</th>
-                            <th class="checkbox-col">חלקי</th>
-                            <th class="checkbox-col">לא קיים</th>
-                            <th class="details-col">פירוט</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    <tbody id="pedagogy-tasks">
                         <tr><td class="task-description">המקצועות המסומנים בכחול נלמדים כתחום דעת לאורך כל השנה, כל שבוע ובכל שכבות הגיל</td><td><input type="radio" name="task1"></td><td><input type="radio" name="task1"></td><td><input type="radio" name="task1"></td><td><input type="text"></td></tr>
                         <tr><td class="task-description">כל המקצועות בארגון הלמידה נלמדים לאורך השנה בכל שכבות הגיל</td><td><input type="radio" name="task2"></td><td><input type="radio" name="task2"></td><td><input type="radio" name="task2"></td><td><input type="text"></td></tr>
                         <tr><td class="task-description">מקצועות הלימוד מצוינים במערכת השעות בשמותיהם, כפי שמפורט בארגון הלמידה</td><td><input type="radio" name="task3"></td><td><input type="radio" name="task3"></td><td><input type="radio" name="task3"></td><td><input type="text"></td></tr>
@@ -363,7 +354,7 @@
             <div class="content-section">
                 <h2>🤖 2. שילוב בינה מלאכותית</h2>
                 <table class="checklist-table">
-                    <tbody>
+                    <tbody id="ai-tasks">
                         <tr>
                             <td class="task-description">
                                 בי"ס מכיר את:
@@ -387,7 +378,7 @@
             <div class="content-section">
                 <h2>👥 3. מתן מענים לאוכלוסיות מיוחדות</h2>
                  <table class="checklist-table">
-                    <tbody>
+                    <tbody id="special-pop-tasks">
                         <tr><td class="task-description">בבי"ס תוכנית לימודים אישית (תל"א) מותאמת לכל זכאי שירותי החינוך המיוחדים</td><td><input type="radio" name="task16"></td><td><input type="radio" name="task16"></td><td><input type="radio" name="task16"></td><td><input type="text"></td></tr>
                         <tr><td class="task-description">תלמידים עולים: קיימת מצבת תלמידים, שובצה מורה בעלת הכשרה ייעודית, קיימת מערכת שעות מותאמת</td><td><input type="radio" name="task17"></td><td><input type="radio" name="task17"></td><td><input type="radio" name="task17"></td><td><input type="text" placeholder="אם לא, מדוע?"></td></tr>
                         <tr><td class="task-description">תלמידים מחוננים: קיימת מצבת תלמידים מחוננים ומצטיינים, וקיים מערך תמיכה וליווי</td><td><input type="radio" name="task18"></td><td><input type="radio" name="task18"></td><td><input type="radio" name="task18"></td><td><input type="text"></td></tr>
@@ -400,7 +391,7 @@
                 <h2>🛡️ 4. ביטחון, בטיחות והיערכות לחירום</h2>
                 <div class="category-title">היערכות לחירום</div>
                 <table class="checklist-table">
-                    <tbody>
+                    <tbody id="emergency-tasks">
                         <tr><td class="task-description">מינוי רכז ביטחון, בטיחות ושעת חירום</td><td><input type="radio" name="task19"></td><td><input type="radio" name="task19"></td><td><input type="radio" name="task19"></td><td><input type="text"></td></tr>
                         <tr><td class="task-description">קיים תיק ביטחון שטח וחירום מוסדי</td><td><input type="radio" name="task20"></td><td><input type="radio" name="task20"></td><td><input type="radio" name="task20"></td><td><input type="text"></td></tr>
                         <tr><td class="task-description">מינוי צוות צל"ח בית ספרי (לרבות תכנית לחירום)</td><td><input type="radio" name="task21"></td><td><input type="radio" name="task21"></td><td><input type="radio" name="task21"></td><td><input type="text"></td></tr>
@@ -413,7 +404,7 @@
                 </table>
                 <div class="category-title">ניהול הבטיחות</div>
                 <table class="checklist-table">
-                     <tbody>
+                     <tbody id="safety-tasks">
                         <tr><td class="task-description">מונתה ועדת בטיחות בית ספרית</td><td><input type="radio" name="task27"></td><td><input type="radio" name="task27"></td><td><input type="radio" name="task27"></td><td><input type="text"></td></tr>
                         <tr><td class="task-description">נקבעו מקומות למורים תורניים והם תודרכו בנוהל "מורים תורנים"</td><td><input type="radio" name="task28"></td><td><input type="radio" name="task28"></td><td><input type="radio" name="task28"></td><td><input type="text"></td></tr>
                         <tr><td class="task-description">מורים לחינוך גופני ולמדעים הונחו בהנחיות הבטיחות לפעילותם</td><td><input type="radio" name="task29"></td><td><input type="radio" name="task29"></td><td><input type="radio" name="task29"></td><td><input type="text"></td></tr>
@@ -428,7 +419,7 @@
             <div class="content-section">
                 <h2>📈 5. תוכנית עבודה</h2>
                 <table class="checklist-table">
-                    <tbody>
+                    <tbody id="work-plan-tasks">
                         <tr><td class="task-description">בבי"ס תוכנית עבודה בית ספרית מקושרת משאבים</td><td><input type="radio" name="task33"></td><td><input type="radio" name="task33"></td><td><input type="radio" name="task33"></td><td><input type="text"></td></tr>
                         <tr><td class="task-description">תוכנית העבודה אושרה בוועדה מלווה</td><td><input type="radio" name="task34"></td><td><input type="radio" name="task34"></td><td><input type="radio" name="task34"></td><td><input type="text"></td></tr>
                         <tr><td class="task-description">פרוטוקול ועדה מלווה הועלה למערכת הגפ"ן</td><td><input type="radio" name="task35"></td><td><input type="radio" name="task35"></td><td><input type="radio" name="task35"></td><td><input type="text"></td></tr>
@@ -440,7 +431,7 @@
             <div class="content-section">
                 <h2>👩‍🏫 6. הון אנושי</h2>
                 <table class="checklist-table">
-                    <tbody>
+                    <tbody id="hr-tasks">
                         <tr><td class="task-description">קיימת תוכנית פיתוח מקצועי למורים (השתלמות מוסדית, מפת פיתוח)</td><td><input type="radio" name="task36"></td><td><input type="radio" name="task36"></td><td><input type="radio" name="task36"></td><td><input type="text"></td></tr>
                         <tr><td class="task-description">נרכשו תחומי הדרכה ושובצו שגרות למפגש עם המדריכים</td><td><input type="radio" name="task37"></td><td><input type="radio" name="task37"></td><td><input type="radio" name="task37"></td><td><input type="text"></td></tr>
                         <tr><td class="task-description">קיימים מנגנונים, סדירויות ושגרות לקידום שלומות (well-being) וצוותי החינוך</td><td><input type="radio" name="task38"></td><td><input type="radio" name="task38"></td><td><input type="radio" name="task38"></td><td><input type="text"></td></tr>
@@ -466,9 +457,43 @@
              </div>
         </div>
 
+        <!-- NEW SECTION: Add Custom Tasks -->
+        <div class="content-section single-column">
+            <h2>➕ הוספת משימות אישיות</h2>
+            <div class="input-group">
+                <label for="customTaskDescription">תוכן המשימה:</label>
+                <input type="text" id="customTaskDescription" placeholder="לדוגמה: וידוא קיום ישיבת פתיחה עם ועד ההורים">
+            </div>
+            <div class="input-group">
+                <label for="customTaskCategory">שיוך לקטגוריה:</label>
+                <select id="customTaskCategory">
+                    <option value="pedagogy-tasks">1. ניהול פדגוגי</option>
+                    <option value="ai-tasks">2. בינה מלאכותית</option>
+                    <option value="special-pop-tasks">3. אוכלוסיות מיוחדות</option>
+                    <option value="emergency-tasks">4. ביטחון (חירום)</option>
+                    <option value="safety-tasks">4. ביטחון (בטיחות)</option>
+                    <option value="work-plan-tasks">5. תוכנית עבודה</option>
+                    <option value="hr-tasks">6. הון אנושי</option>
+                    <option value="general-tasks">כללי (משימות נוספות)</option>
+                </select>
+            </div>
+            <button class="btn" onclick="addTask()">הוסף משימה</button>
+        </div>
+
+        <!-- NEW SECTION for general tasks if needed -->
+        <div id="general-tasks-container" style="display: none;">
+             <div class="content-section single-column">
+                <h2>📋 משימות נוספות</h2>
+                <table class="checklist-table">
+                    <tbody id="general-tasks">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <!-- הוספת הערות -->
         <div class="content-section single-column">
-            <h2>➕ הוספת הערות, חוזקות ונקודות לשיפור</h2>
+            <h2>📝 הוספת הערות, חוזקות ונקודות לשיפור</h2>
             <div class="input-group">
                 <label for="noteTitle">כותרת:</label>
                 <input type="text" id="noteTitle" placeholder="לדוגמה: מוכנות הכיתות, תוכנית שילוב...">
@@ -510,8 +535,9 @@
         // Set today's date on load
         document.getElementById('visitDate').valueAsDate = new Date();
 
-        let notesData = [];
         let noteCounter = 0;
+        let notesData = [];
+        let taskCounter = 40; // Start counter after existing tasks
 
         function addNote() {
             const title = document.getElementById('noteTitle').value.trim();
@@ -553,6 +579,42 @@
             notesData = notesData.filter(note => note.id !== id);
             renderNotes();
         }
+
+        function addTask() {
+            const description = document.getElementById('customTaskDescription').value.trim();
+            const categoryId = document.getElementById('customTaskCategory').value;
+
+            if (!description) {
+                alert('אנא הזן את תוכן המשימה.');
+                return;
+            }
+
+            // If the category is general, make sure its container is visible
+            if (categoryId === 'general-tasks') {
+                document.getElementById('general-tasks-container').style.display = 'block';
+            }
+
+            const targetTableBody = document.getElementById(categoryId);
+            if (!targetTableBody) {
+                console.error('Target table body not found:', categoryId);
+                return;
+            }
+
+            taskCounter++;
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td class="task-description" style="background-color: #fef9e7;">${description}</td>
+                <td><input type="radio" name="custom-task-${taskCounter}"></td>
+                <td><input type="radio" name="custom-task-${taskCounter}"></td>
+                <td><input type="radio" name="custom-task-${taskCounter}"></td>
+                <td><input type="text"></td>
+            `;
+            
+            targetTableBody.appendChild(newRow);
+
+            // Clear the input
+            document.getElementById('customTaskDescription').value = '';
+        }
         
         function downloadReportAsDoc() {
             // 1. Gather Data
@@ -565,15 +627,20 @@
             const areasForImprovement = [];
 
             document.querySelectorAll('.checklist-table tbody tr').forEach(row => {
-                const description = row.querySelector('.task-description').textContent.trim().replace(/\s+/g, ' ');
-                const detailsInput = row.querySelector('.details-col input');
+                const descriptionEl = row.querySelector('.task-description');
+                if (!descriptionEl) return;
+
+                const description = descriptionEl.textContent.trim().replace(/\s+/g, ' ');
+                const detailsInput = row.querySelector('.details-col input, td:last-child input');
                 const details = detailsInput ? detailsInput.value.trim() : '';
                 
                 let status = "לא סומן";
                 const radios = row.querySelectorAll('input[type="radio"]');
-                if (radios[0]?.checked) status = "קיים";
-                if (radios[1]?.checked) status = "חלקי";
-                if (radios[2]?.checked) status = "לא קיים";
+                if (radios.length > 0) {
+                     if (radios[0]?.checked) status = "קיים";
+                     if (radios[1]?.checked) status = "חלקי";
+                     if (radios[2]?.checked) status = "לא קיים";
+                }
 
                 let formattedItem = `<li><strong>${description}</strong>`;
                 if(details) {
