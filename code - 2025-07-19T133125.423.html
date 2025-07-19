@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>יסודי עכשווי - חינוך יסודי הוגן, רלוונטי ומכוון עתיד</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Rubik', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .presentation-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            padding: 30px 50px 80px 50px;
+            position: absolute;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .slide h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #485563, #29323c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .slide h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+
+        .slide-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .slide h3 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #34495e;
+            margin-bottom: 15px;
+        }
+        
+        .subtitle {
+            font-size: 1.6rem;
+            color: #7f8c8d;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .bullet-point {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin: 10px 0;
+            color: #34495e;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .bullet-point::before {
+            content: "✓";
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 2px;
+        }
+        
+        .highlight {
+            background-color: rgba(102, 126, 234, 0.15);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+            color: #433d7b;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+        
+        .grid-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+        
+        .grid-item h4 {
+            color: #667eea;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .grid-item p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .navigation {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 1000;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0,0,0,0.1); padding: 12px 25px; border-radius: 25px; cursor: pointer;
+            font-size: 1rem; font-weight: 500; color: #2c3e50; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; backdrop-filter: blur(10px);
+        }
+        
+        .nav-btn:hover { background: #667eea; color: white; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; background: rgba(255, 255, 255, 0.9); color: #2c3e50; }
+        
+        .slide-counter {
+            position: fixed; top: 20px; right: 20px; background: rgba(255, 255, 255, 0.9); padding: 8px 16px; border-radius: 20px;
+            font-weight: 500; color: #2c3e50; backdrop-filter: blur(10px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo { position: fixed; top: 20px; left: 20px; font-size: 1.2rem; font-weight: bold; color: #34495e; }
+        .center-content { display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; text-align: center; }
+        
+        .action-box {
+            background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 25px 40px; border-radius: 15px;
+            margin-top: 20px; text-align: right; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); width: 100%; max-width: 900px;
+        }
+        .action-box h3 { color: white; margin-bottom: 15px; font-size: 1.6rem; text-align: center; }
+        .action-box .bullet-point { font-size: 1.2rem; color: white; }
+        .action-box .bullet-point::before { color: #fff; }
+
+        /* Styles for the Theory of Change slide */
+        .toc-container {
+            display: flex;
+            flex-direction: row-reverse; /* This sets the flow from right to left */
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: 15px;
+        }
+        .toc-stage {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
+            flex-shrink: 1;
+        }
+        .toc-stage.inputs { flex-basis: 25%; }
+        .toc-stage.activities { flex-basis: 30%; }
+        .toc-stage.outputs { flex-basis: 20%; }
+        .toc-stage.impact { flex-basis: 25%; }
+
+        .toc-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 15px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .toc-box h4 {
+            font-size: 1.1rem;
+            color: #34495e;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .toc-box p {
+            font-size: 0.9rem;
+            color: #495057;
+            line-height: 1.5;
+        }
+        .toc-box .small-text { font-size: 0.8rem; color: #6c757d; }
+        .toc-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .arrow-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        .arrow-symbol {
+            font-size: 2.5rem;
+            color: #667eea;
+            line-height: 1;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="logo">משרד החינוך | המינהל הפדגוגי</div>
+    <div class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">14</span></div>
+
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="center-content">
+                <h1>יסודי עכשווי</h1>
+                <div class="subtitle">חינוך יסודי הוגן, רלוונטי ומכוון עתיד</div>
+                <div class="subtitle" style="font-size: 1.4rem; margin-top: 20px;">תיאוריית השינוי ומודל היישום | הצגה לצוות בכיר</div>
+                <div style="font-size: 3rem; margin: 20px 0;">🌟📚🚀</div>
+            </div>
+        </div>
+
+        <!-- Slide 2: The "Why" -->
+        <div class="slide">
+            <div class="slide-header"><h2>הצורך בשינוי: למה עכשיו?</h2></div>
+            <div class="grid-container" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="grid-item"><h4>🌪️ עולם VUCA</h4><p>מציאות תנודתית ומורכבת המחייבת יכולות הסתגלות וחשיבה ביקורתית.</p></div>
+                <div class="grid-item"><h4>🤖 מגמות גלובליות</h4><p>מהפכת ה-AI והקיטוב החברתי דורשים היערכות חינוכית מחודשת.</p></div>
+                <div class="grid-item"><h4>🛡️ חוסן בעת משבר</h4><p>אירועים אחרונים הדגישו צורך קריטי בפיתוח חוסן אישי וחברתי.</p></div>
+                <div class="grid-item"><h4>💡 התאמה ללומד</h4><p>צורך בעוררות סקרנות, פעלנות ויצירת משמעות בלמידה בגיל היסודי.</p></div>
+                <div class="grid-item"><h4>🧩 עשייה לא מערכתית</h4><p>יוזמות חדשניות קיימות אך הן נקודתיות וחסרות מסגרת-על מאחדת.</p></div>
+                <div class="grid-item"><h4>📈 צמצום פערים</h4><p>נתונים מצביעים על פערים בהישגים המחייבים מענה שיטתי, הוגן ומותאם.</p></div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Innovation -->
+        <div class="slide">
+            <div class="slide-header"><h2>החידוש: מסגרת מארגנת הוליסטית</h2></div>
+            <div style="text-align: center; font-size: 1.3rem; color: #34495e; margin-bottom: 30px;">
+                תפיסת "יסודי עכשווי" אינה עוד יוזמה, אלא <span class="highlight">מסגרת-על אסטרטגית</span> המאחדת את כלל המרכיבים למערכת קוהרנטית.
+            </div>
+            <div class="grid-container" style="grid-template-columns: repeat(3, 1fr);">
+                 <div class="grid-item" style="text-align: center;"><span style="font-size: 2.5rem;">🌐</span><h4>הוליסטיות ואינטגרציה</h4><p>קישור שיטתי בין רכיבים פדגוגיים, ארגוניים ותקציביים.</p></div>
+                <div class="grid-item" style="text-align: center;"><span style="font-size: 2.5rem;">🔄</span><h4>התפתחות טבעית</h4><p>התבססות על עקרונות מוכחים ויוזמות קיימות ליצירת קפיצת מדרגה.</p></div>
+                <div class="grid-item" style="text-align: center;"><span style="font-size: 2.5rem;">⚡</span><h4>סינרגיה מערכתית</h4><p>יצירת שלם הגדול מסך חלקיו, המאפשר תגובה אפקטיבית לאתגרים.</p></div>
+            </div>
+             <div style="margin-top: 30px; font-size: 1.4rem; font-weight: 600; color: #667eea; text-align: center;">
+                התוצאה: מערכת חינוך חזקה, גמישה ורלוונטית יותר.
+            </div>
+        </div>
+
+        <!-- Slide 4: Overarching Goal -->
+        <div class="slide">
+             <div class="slide-header"><h2>מטרת העל והנגזרות שלה</h2></div>
+            <div style="background: #f8f9fa; border: 1px solid #dee2e6; padding: 25px; border-radius: 15px; text-align: center; margin-bottom: 30px;">
+                <h3 style="color: #2c3e50; font-size: 1.6rem; margin: 0;">התאמת מערכת החינוך היסודי למציאות המשתנה, כך שתוכל להתמודד עם אתגרי ההווה והעתיד.</h3>
+            </div>
+            <h4>מטרות נגזרות:</h4>
+            <div class="grid-container" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="grid-item"><h4>🎯 פיתוח Agency ו-Co-Agency</h4><p>יכולת לפעול עצמאית ובמשותף כדי ליזום ולהשפיע.</p></div>
+                <div class="grid-item"><h4>📚 רכישת מיומנויות יסוד עדכניות</h4><p>אוריינות, חשיבה ביקורתית ולמידה עצמאית.</p></div>
+                <div class="grid-item"><h4>🤝 טיפוח שלומות וכישורים חברתיים</h4><p>מודעות עצמית, ויסות רגשי, אמפתיה וחוסן אישי.</p></div>
+                <div class="grid-item"><h4>⚖️ יצירת מענה הוגן ומותאם</h4><p>מתן חינוך רלוונטי והוגן לכל תלמיד/ה במציאות מורכבת.</p></div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Theory of Change (CORRECTED) -->
+        <div class="slide">
+            <div class="slide-header"><h2>תיאוריית השינוי - יסודי עכשווי 🔄</h2></div>
+            <div class="toc-container">
+                <!-- IMPORTANT: The order here is reversed in the HTML to achieve a right-to-left flow with flex-direction: row-reverse -->
+                <!-- LEFTMOST ELEMENT: Impact -->
+                <div class="toc-stage impact">
+                    <div class="toc-box">
+                        <h4>שגשוג בעולם משתנה</h4>
+                        <p>רכישת כישורי התמודדות עם אתגרי ההווה והעתיד.</p>
+                    </div>
+                </div>
+                <!-- ARROW 3 -->
+                <div class="toc-arrow"><div class="arrow-label">יאפשרו</div><div class="arrow-symbol">⬅</div></div>
+                <!-- MIDDLE ELEMENT 2: Outputs -->
+                <div class="toc-stage outputs">
+                    <div class="toc-box">
+                        <h4>פיתוח מיומנויות וקידום</h4>
+                        <p style="font-weight: 600;">Agency ו-Co-agency</p>
+                    </div>
+                </div>
+                <!-- ARROW 2 -->
+                <div class="toc-arrow"><div class="arrow-label">יובילו ל</div><div class="arrow-symbol">⬅</div></div>
+                <!-- MIDDLE ELEMENT 1: Activities -->
+                <div class="toc-stage activities">
+                    <div class="toc-box">
+                        <h4>יישום פרקטיקות פדגוגיות חדשניות</h4>
+                        <p>מבוססות מיומנויות והוגנות, תואמות גיל ודור.</p>
+                        <p class="small-text">(למידה רלוונטית, התנסותית, מותאמת אישית, בין-תחומית ומשלבת טכנולוגיה)</p>
+                    </div>
+                </div>
+                <!-- ARROW 1 -->
+                <div class="toc-arrow"><div class="arrow-label">יקדמו</div><div class="arrow-symbol">⬅</div></div>
+                <!-- RIGHTMOST ELEMENT: Inputs -->
+                <div class="toc-stage inputs">
+                    <div class="toc-box"><h4>תהליכי פיתוח מקצועי מתמשכים</h4><p>למורים, מדריכים, מנהלים ומפקחים</p></div>
+                    <div class="toc-box"><h4>אסדרות מערכתיות</h4></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Multi-Year Plan -->
+        <div class="slide">
+            <div class="slide-header"><h2>מפת הדרכים: תוכנית רב-שנתית</h2></div>
+            <div class="grid-container" style="grid-template-columns: repeat(3, 1fr); align-items: flex-start;">
+                <div class="grid-item">
+                    <h4>שלב א': תשפ"ו (פיילוט)</h4>
+                    <p class="bullet-point" style="font-size: 1rem;">השתתפות 50 בתי ספר</p>
+                    <p class="bullet-point" style="font-size: 1rem;">פיתוח כלים ומסמכי תפיסה</p>
+                    <p class="bullet-point" style="font-size: 1rem;">הכשרת מדריכים ורכזים מובילים</p>
+                </div>
+                <div class="grid-item">
+                    <h4>שלב ב': תשפ"ז (הרחבה וביסוס)</h4>
+                    <p class="bullet-point" style="font-size: 1rem;">הרחבה ל-100 בתי ספר נוספים</p>
+                    <p class="bullet-point" style="font-size: 1rem;">גיבוש "תו תקן יסודי עכשווי"</p>
+                    <p class="bullet-point" style="font-size: 1rem;">פיתוח והטמעת כלי הערכה חדשים</p>
+                </div>
+                <div class="grid-item">
+                    <h4>שלב ג': תשפ"ח (הטמעה רחבה)</h4>
+                    <p class="bullet-point" style="font-size: 1rem;">הטמעה רחבה במערכת החינוך</p>
+                    <p class="bullet-point" style="font-size: 1rem;">שיפור במדדים בינלאומיים</p>
+                    <p class="bullet-point" style="font-size: 1rem;">צמצום פערים באופן שיטתי</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Activities - HQ Level -->
+        <div class="slide">
+            <div class="slide-header"><h2>דרכי פעולה: רמת המטה</h2></div>
+            <div class="grid-container" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="grid-item"><h4>⚖️ אסדרות מערכתיות</h4><p>התאמת ארגון הלמידה (לדוגמה, "זמן פיתוח" למורים), והנחיות ללמידה חוץ-כיתתית.</p></div>
+                <div class="grid-item"><h4>🤝 שותפויות אסטרטגיות</h4><p>בניית שיתופי פעולה עם מחוזות, רשויות, ואקדמיה להכפלת הכוח.</p></div>
+                <div class="grid-item"><h4>📈 פיתוח מקצועי מתמשך</h4><p>הכשרה ממוקדת לרכזים, מנהלים, צוותי פיתוח ומפקחים.</p></div>
+                <div class="grid-item"><h4>🛠️ פיתוח תשתיות וכלים</h4><p>פיתוח תשתיות דיגיטליות, כלי הערכה חדשניים ופלטפורמות שיתופיות.</p></div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Activities - School Level -->
+        <div class="slide">
+            <div class="slide-header"><h2>דרכי פעולה: רמת בית הספר</h2></div>
+            <div class="grid-container" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="grid-item"><h4>👑 מנהיגות פדגוגית</h4><p>מינוי רכז וצוות מו"פ בית-ספרי שיובילו את השינוי ויתאימו אותו להקשר המקומי.</p></div>
+                <div class="grid-item"><h4>🌱 פיתוח מקצועי והדרכה</h4><p>השתלמויות ייעודיות, ליווי של מדריכים ולמידת עמיתים כחלק משגרת העבודה.</p></div>
+                <div class="grid-item"><h4>🔄 הובלת שינוי פדגוגי</h4><p>גיבוש פרקטיקות הוראה חדשות, התנסות בפרויקטים והרחבה הדרגתית של העשייה.</p></div>
+                <div class="grid-item"><h4>🏘️ הכלה ושיתוף קהילה</h4><p>טיפוח אקלים תומך, שיתוף הורים פעיל וחיבור לקהילה המקומית.</p></div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Outcomes -->
+        <div class="slide">
+            <div class="slide-header"><h2>תוצאות מצופות: בטווח הקצר והארוך</h2></div>
+            <div class="grid-container" style="grid-template-columns: repeat(4, 1fr); align-items: flex-start;">
+                <div class="grid-item"><h4>👤 ברמת התלמיד</h4><p>שיפור במיומנויות ו-Agency, עלייה במעורבות ובמוטיבציה.</p></div>
+                <div class="grid-item"><h4>👨‍🏫 ברמת המורה</h4><p>אימוץ גישות הוראה חדשניות, עלייה בתחושת המסוגלות המקצועית.</p></div>
+                <div class="grid-item"><h4>🏫 ברמת בית הספר</h4><p>שיפור באקלים ובהישגים, ויכולת ארגונית להסתגל לשינויים.</p></div>
+                <div class="grid-item"><h4>🏛️ ברמת המערכת</h4><p>שיפור במדדים בינ"ל, הטמעת למידה מבוססת מיומנויות, וצמצום פערים.</p></div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Evaluation Metrics -->
+        <div class="slide">
+            <div class="slide-header"><h2>מדדי הערכה: איך נדע שהצלחנו?</h2></div>
+            <div class="grid-container" style="grid-template-columns: 1fr 1fr; align-items: flex-start;">
+                 <div class="grid-item" style="border-left-color: #764ba2;">
+                    <h3 style="color: #764ba2; font-size: 1.5rem;">🏫 ברמת בית הספר</h3>
+                    <p class="bullet-point" style="font-size: 1rem;">כלי הערכה עצמית ורפלקטיבית</p>
+                    <p class="bullet-point" style="font-size: 1rem;">מדד Agency ו-Co-Agency</p>
+                    <p class="bullet-point" style="font-size: 1rem;">שאלוני מיומנויות (בפיתוח עם ראמ"ה)</p>
+                    <p class="bullet-point" style="font-size: 1rem;">עמידה בקריטריונים של "תו תקן"</p>
+                </div>
+                <div class="grid-item" style="border-left-color: #27ae60;">
+                    <h3 style="color: #27ae60; font-size: 1.5rem;">🏛️ ברמת המערכת</h3>
+                    <p class="bullet-point" style="font-size: 1rem;">מדדים בינלאומיים: PISA, PIRLS</p>
+                    <p class="bullet-point" style="font-size: 1rem;">ניתוח שיטתי של נתונים ומגמות</p>
+                    <p class="bullet-point" style="font-size: 1rem;">הערכת יישום מדיניות והטמעה</p>
+                    <p class="bullet-point" style="font-size: 1rem;">מדדים לצמצום פערים בין קבוצות</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 11: Model in Action -->
+        <div class="slide">
+            <div class="slide-header"><h2>המודל בפעולה: מה נראה בשטח?</h2></div>
+             <div style="margin-bottom: 20px; text-align: center; font-size: 1.4rem; font-weight: 500;">
+                <span style="color: #9b59b6;">קהילה</span> ↔️
+                <span style="color: #27ae60;">בית הספר</span> ↔️
+                <span style="color: #e67e22;">מורה</span> ↔️
+                <span style="color: #3498db;">תלמיד</span>
+            </div>
+            <div class="grid-container" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="grid-item" style="border-left-color: #3498db;"><h4>👤 רמת התלמיד: פעלן עצמאי</h4><p>מציב יעדים, מוביל יוזמות, מפתח חשיבה ביקורתית ושותף בתכנון הלמידה.</p></div>
+                 <div class="grid-item" style="border-left-color: #e67e22;"><h4>👨‍🏫 רמת המורה: מנטור ומנחה</h4><p>מקיים חונכות, משלב שיטות הוראה מגוונות ומנהל הרכבי למידה גמישים.</p></div>
+                 <div class="grid-item" style="border-left-color: #27ae60;"><h4>🏫 רמת בית הספר: ארגון גמיש</h4><p>מפעיל מרחבי חקר, מאפשר גמישות פדגוגית ותקציבית ומטפח אקלים של אמון.</p></div>
+                 <div class="grid-item" style="border-left-color: #9b59b6;"><h4>🏘️ רמת הקהילה: שותפות פעילה</h4><p>מקיים פרויקטים, מעודד מעורבות הורים וממצה משאבים קהילתיים ללמידה.</p></div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Student Experience -->
+        <div class="slide">
+            <div class="slide-header"><h2>חוויית התלמיד: לומד חוקר ויוזם</h2></div>
+            <div class="grid-container" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="grid-item"><h4>🌅 בוקר של גילוי</h4><p>היום מתחיל באתגר או שאלה מסקרנת, לא בשיעור פרונטלי.</p></div>
+                <div class="grid-item"><h4>🎯 למידה פעילה</h4><p>הלמידה מתרחשת במרחבים מגוונים: מעבדות, סדנאות, בחוץ ובקהילה.</p></div>
+                <div class="grid-item"><h4>✨ בחירה ואוטונומיה</h4><p>אני יכול/ה לבחור נושאי חקר ופרויקטים אישיים שמעניינים אותי.</p></div>
+                <div class="grid-item"><h4>🤝 פעולה משותפת</h4><p>אני עובד/ת בצוות, לומד/ת מחברים ופותר/ת בעיות יחד איתם.</p></div>
+                <div class="grid-item"><h4>💻 טכנולוגיה מסייעת</h4><p>אני משתמש/ת בכלים דיגיטליים ו-AI כדי לחקור, ליצור ולהציג.</p></div>
+                <div class="grid-item"><h4>🪞 רפלקציה והתפתחות</h4><p>יש לי זמן להתבונן בלמידה שלי, לקבל משוב ולהציב מטרות להמשך.</p></div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Teacher Experience -->
+        <div class="slide">
+            <div class="slide-header"><h2>חוויית המורה: מנטור, מפתח ומנחה</h2></div>
+            <div class="grid-container" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="grid-item"><h4>📋 תכנון גמיש</h4><p>אני מתכנן יחידות למידה ופרויקטים מגוונים במקום מערכי שיעור קשיחים.</p></div>
+                <div class="grid-item"><h4>🎓 הנחיה וליווי</h4><p>תפקידי המרכזי הוא להנחות, לשאול שאלות ולסייע לתלמידים בלמידתם העצמאית.</p></div>
+                <div class="grid-item"><h4>📈 פיתוח מתמיד</h4><p>אני חלק מקהילת למידה מקצועית, לומד/ת ומתפתח/ת באופן שוטף.</p></div>
+                <div class="grid-item"><h4>👥 עבודת צוות</h4><p>אני עובד/ת בשיתוף פעולה הדוק עם מורים אחרים לתכנון, יישום והערכה.</p></div>
+                <div class="grid-item"><h4>💡 יצירתיות פדגוגית</h4><p>יש לי את המרחב והגיבוי לנסות דרכי הוראה חדשות ולהיות יצירתי/ת.</p></div>
+                <div class="grid-item"><h4>🚀 הובלת שינוי</h4><p>אני שותף/ה פעיל/ה ביישום התפיסה בבית הספר ובשיתוף הקהילה.</p></div>
+            </div>
+        </div>
+        
+        <!-- Slide 14: Summary and Call to Action -->
+        <div class="slide">
+            <div class="center-content">
+                <div class="slide-header" style="margin-bottom: 20px;"><h2>סיכום, חזון וקריאה לפעולה</h2></div>
+                
+                <p class="bullet-point" style="font-size: 1.3rem;">"יסודי עכשווי" הוא המעבר מיוזמות נקודתיות למערכת חינוך <span class="highlight">קוהרנטית, הוליסטית ורלוונטית</span>.</p>
+                <p class="bullet-point" style="font-size: 1.3rem;">אנו בונים מערכת חינוך שאינה רק מגיבה לשינויים, אלא <span class="highlight">מובילה אותם</span> ומטפחת בוגרים מוכנים לעולם המחר.</p>
+                
+                <div class="action-box">
+                    <h3>החלטות נדרשות להנעת המהלך</h3>
+                    <p class="bullet-point">אישור מפת הדרכים ותקצוב הפיילוט והרחבתו (50 -> 100 בתי ספר).</p>
+                    <p class="bullet-point">גיבוי לקידום אסדרות מערכתיות תומכות (זמן מורה, למידה חוץ-כיתתית).</p>
+                    <p class="bullet-point">הקצאת משאבים לפיתוח כלי הערכה חדשניים ו"תו תקן".</p>
+                </div>
+                
+                <div style="font-size: 1.6rem; font-weight: 600; color: #667eea; margin-top: 15px;">
+                    יחד נבנה את החינוך של המחר - היום.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">➡️ הקודם</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">הבא ⬅️</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('totalSlides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        
+        function changeSlide(direction) {
+            if ((direction > 0 && currentSlide < totalSlides - 1) || (direction < 0 && currentSlide > 0)) {
+                showSlide(currentSlide + direction);
+            }
+        }
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === 'PageDown') changeSlide(1);
+            else if (e.key === 'ArrowLeft' || e.key === 'PageUp') changeSlide(-1);
+            else if (e.key === 'Home') showSlide(0);
+            else if (e.key === 'End') showSlide(totalSlides - 1);
+        });
+        
+        let touchStartX = 0;
+        const presentationContainer = document.querySelector('.presentation-container');
+        
+        presentationContainer.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+        presentationContainer.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            if (touchEndX < touchStartX - 50) changeSlide(1);
+            if (touchEndX > touchStartX + 50) changeSlide(-1);
+        });
+        
+        showSlide(0);
+    </script>
+</body>
+</html>
