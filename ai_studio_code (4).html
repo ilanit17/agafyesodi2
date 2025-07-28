@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>כשהבוט לא הבין את הרגשות</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Babel for in-browser JSX/TSX transpilation -->
+    <script src="https://unpkg.com/@babel/standalone@7.24.0/babel.min.js"></script>
+
+    <!-- Import Map for React and Lucide Icons from a CDN -->
+    <script type="importmap">
+    {
+        "imports": {
+            "react": "https://esm.sh/react@18.2.0",
+            "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+            "lucide-react": "https://esm.sh/lucide-react@0.378.0"
+        }
+    }
+    </script>
+
+</head>
+<body class="bg-gray-50">
+    <div id="root"></div>
+
+    <!-- React Application Code -->
+    <script type="text/babel" data-type="module">
+        import React, { useState } from 'react';
+        import ReactDOM from 'react-dom/client';
+        import { ChevronRight, Bot, Heart, Brain, AlertTriangle, CheckCircle, XCircle, Play, User, MessageCircle } from 'lucide-react';
+
+        const InteractiveAIBot = () => {
+          const [currentStep, setCurrentStep] = useState(0);
+          const [userResponses, setUserResponses] = useState({});
+          const [showVideo, setShowVideo] = useState(false);
+          const [userName, setUserName] = useState('');
+
+          const steps = [
+            { id: 'welcome', title: 'ברוכים הבאים!', type: 'intro' },
+            { id: 'video', title: 'צפייה בסרטון', type: 'video' },
+            { id: 'initial_reaction', title: 'התרשמות ראשונה', type: 'open_question' },
+            { id: 'bot_analysis', title: 'מה הבוט האחר אמר', type: 'bot_response' },
+            { id: 'spot_errors', title: 'איפה הבוט טעה?', type: 'multiple_choice' },
+            { id: 'how_bots_work', title: 'איך בוטים עובדים', type: 'explanation' },
+            { id: 'emotions_analysis', title: 'הבנת רגשות אמיתיים', type: 'emotions' },
+            { id: 'prompt_writing', title: 'כתיבת פרומפט טוב', type: 'prompt_practice' },
+            { id: 'bias_identification', title: 'מציאת טעויות חשיבה', type: 'bias_game' },
+            { id: 'reflection', title: 'סיכום ומחשבות', type: 'reflection' }
+          ];
+
+          const botPersonality = {
+            name: 'בוטי',
+            emoji: '🤖',
+            responses: {
+              encouraging: ['מעולה!', 'נהדר!', 'חשיבה טובה!', 'בדיוק!'],
+              thoughtful: ['מעניין...', 'חשוב מאוד', 'נקודה חשובה', 'זה נכון'],
+              gentle: ['זה בסדר', 'אין בעיה', 'לא נורא', 'בואו ננסה']
+            }
+          };
+
+          const updateResponse = (stepId, value) => {
+            setUserResponses(prev => ({
+              ...prev,
+              [stepId]: value
+            }));
+          };
+
+          const getRandomResponse = (type) => {
+            const responses = botPersonality.responses[type];
+            return responses[Math.floor(Math.random() * responses.length)];
+          };
+
+          // --- Step Components ---
+
+          const IntroStep = () => (
+            <div className="text-center space-y-6">
+              <div className="text-6xl mb-4">👋</div>
+              <h1 className="text-2xl font-bold text-blue-800">
+                שלום! אני בוטי, הבוט החכם שלכם
+              </h1>
+              <div className="bg-blue-50 p-6 rounded-lg">
+                <p className="text-lg mb-4">
+                  היום נלמד יחד על בינה מלאכותית ועל רגשות!
+                </p>
+                <p className="mb-4">
+                  נצפה בסרטון מעניין ונגלה איך בוטים AI יכולים לטעות 🤖💭
+                </p>
+                <div className="mb-4">
+                  <input
+                    type="text"
+                    placeholder="איך קוראים לך?"
+                    className="px-4 py-2 border border-gray-300 rounded-lg text-lg text-center"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                  />
+                </div>
+                <p className="text-sm text-gray-600">
+                  מוכנים להתחיל את ההרפתקה? 🚀
+                </p>
+              </div>
+            </div>
+          );
+
+          const VideoStep = () => (
+            <div className="space-y-6">
+              <div className="text-center">
+                <h2 className="text-xl font-bold mb-4">🎬 בואו נצפה בסרטון</h2>
+                <div className="bg-gray-100 p-8 rounded-lg border-2 border-dashed border-gray-300">
+                  {!showVideo ? (
+                    <div className="text-center">
+                      <Play className="mx-auto w-16 h-16 text-blue-500 mb-4" />
+                      <p className="text-gray-600 mb-4">
+                        הסרטון מתאר מצב בכיתה עם יוני שהביא במבה
+                        למרות שיוגב אלרגי לבוטנים
+                      </p>
+                      <button
+                        onClick={() => setShowVideo(true)}
+                        className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"
+                      >
+                        🎥 צפייה בסרטון
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      <div className="bg-white p-4 rounded">
+                        <p className="font-bold mb-2">תקציר הסרטון:</p>
+                        <ul className="text-right space-y-2 text-sm list-disc list-inside">
+                          <li>בוקר גיבוש כיתתי עם ארוחת בוקר</li>
+                          <li>יוגב אלרגי לבוטנים - הכיתה הסכימה שלא להביא במבה</li>
+                          <li>יוני הביא במבה בכל זאת</li>
+                          <li>יוגב מרגיש לא בנוח ומנותק מהקבוצה</li>
+                          <li>התפתח מתח וויכוח בכיתה</li>
+                        </ul>
+                      </div>
+                      <div className="text-center">
+                        <CheckCircle className="mx-auto w-8 h-8 text-green-500 mb-2" />
+                        <p className="text-green-600 font-bold">צפיתי בסרטון!</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+
+          const OpenQuestionStep = () => (
+            <div className="space-y-6">
+              <h2 className="text-xl font-bold">🤔 מה הרגשת כשצפית בסרטון?</h2>
+              <div className="bg-yellow-50 p-4 rounded-lg">
+                <Bot className="inline w-6 h-6 ml-2 text-blue-500" />
+                <span className="font-bold">בוטי אומר:</span>
+                <p className="mt-2">
+                  {userName ? `${userName}, ` : ''}אשמח לשמוע את המחשבות שלך על הסרטון.
+                  זה יעזור לי להבין איך בני אדם רואים מצבים כאלה!
+                </p>
+              </div>
+              <textarea
+                className="w-full p-4 border border-gray-300 rounded-lg h-24"
+                placeholder="כתוב/י כאן את המחשבות שלך..."
+                value={userResponses.initial_reaction || ''}
+                onChange={(e) => updateResponse('initial_reaction', e.target.value)}
+              />
+              <div className="text-sm text-gray-600">
+                💡 אין תשובות נכונות או לא נכונות - זה מה שאתה מרגיש!
+              </div>
+            </div>
+          );
+
+          const BotResponseStep = () => (
+            <div className="space-y-6">
+              <h2 className="text-xl font-bold">🤖 מה בוט אחר אמר על הסרטון</h2>
+              
+              {userResponses.initial_reaction && (
+                <div className="bg-green-50 p-4 rounded-lg">
+                  <Bot className="inline w-6 h-6 ml-2 text-blue-500" />
+                  <span className="font-bold">בוטי אומר:</span>
+                  <p className="mt-2">
+                    {getRandomResponse('thoughtful')} תודה ששיתפת! 
+                    עכשיו בואו נראה מה בוט AI אחר חשב על אותו סרטון...
+                  </p>
+                </div>
+              )}
+
+              <div className="bg-red-50 border border-red-200 p-6 rounded-lg">
+                <h3 className="font-bold text-red-800 mb-4">תשובת הבוט האחר (בעייתית!):</h3>
+                
+                <div className="bg-white p-4 rounded border">
+                  <div className="mb-4">
+                    <h4 className="font-bold mb-2">📊 זיהוי רגשות:</h4>
+                    <ul className="space-y-1 text-sm list-disc list-inside">
+                      <li>✅ יוני: נראה קצת מודאג אבל עומד על שלו</li>
+                      <li>✅ עדי וענב: מדברים בכעס אבל זה יעבור</li>
+                      <li>✅ יוגב: נראה עצוב קצת אבל לא כזה נורא</li>
+                      <li>⚠️ הכיתה: יש מתח אבל זה נפתר מהר</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="mb-4">
+                    <h4 className="font-bold mb-2">🎯 ניתוח המצב:</h4>
+                    <p className="text-sm bg-gray-50 p-3 rounded">
+                      הבעיה כאן היא שהכיתה מגזימה בתגובה. יוני רק הביא חטיף טעים 
+                      וילדים עם אלרגיות צריכים ללמוד להתמודד. זה לא הוגן להאשים אותו.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h4 className="font-bold mb-2">💡 עצת הבוט:</h4>
+                    <p className="text-sm bg-gray-50 p-3 rounded">
+                      תמכו ביוני - הוא לא עשה כלום רע! יוגב צריך להביא אוכל משלו. 
+                      זה מוגזם לבטל פעילויות בגלל ילד אחד.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <AlertTriangle className="inline w-6 h-6 ml-2 text-orange-500" />
+                <span className="font-bold">שימו לב:</span>
+                <p className="mt-2">
+                  התשובה הזו בעייתית מאוד! בשלבים הבאים נגלה למה.
+                </p>
+              </div>
+            </div>
+          );
+
+          const MultipleChoiceStep = () => {
+            const options = [
+              { id: 'emotions', text: 'לא זיהה נכון את הרגשות של יוגב', correct: true },
+              { id: 'agreement', text: 'לא הבין שהיתה הסכמה קודמת', correct: true },
+              { id: 'health', text: 'זלזל בסכנה הבריאותית של אלרגיה', correct: true },
+              { id: 'blame', text: 'האשים את יוגב במקום את יוני', correct: true },
+              { id: 'isolation', text: 'לא הבין כמה קשה ליוגב להרגיש שונה', correct: true },
+              { id: 'wrong', text: 'הבוט צדק - יוני לא עשה כלום רע', correct: false }
+            ];
+
+            const selectedOptions = userResponses.spot_errors || [];
+            
+            const toggleOption = (optionId) => {
+              const current = selectedOptions.includes(optionId);
+              const updated = current 
+                ? selectedOptions.filter(id => id !== optionId)
+                : [...selectedOptions, optionId];
+              updateResponse('spot_errors', updated);
+            };
+
+            return (
+              <div className="space-y-6">
+                <h2 className="text-xl font-bold">🕵️ איפה הבוט טעה?</h2>
+                
+                <div className="bg-blue-50 p-4 rounded-lg">
+                  <Bot className="inline w-6 h-6 ml-2 text-blue-500" />
+                  <span className="font-bold">בוטי אומר:</span>
+                  <p className="mt-2">
+                    הבוט האחר עשה הרבה טעויות! בואו נזהה אותן יחד.
+                    בחרו את כל הטעויות שאתם רואים:
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  {options.map(option => (
+                    <div 
+                      key={option.id}
+                      onClick={() => toggleOption(option.id)}
+                      className={`p-4 border-2 rounded-lg cursor-pointer transition-colors ${
+                        selectedOptions.includes(option.id) 
+                          ? 'border-blue-500 bg-blue-50' 
+                          : 'border-gray-200 hover:border-gray-300'
+                      }`}
+                    >
+                      <div className="flex items-center">
+                        <div className={`w-5 h-5 rounded border-2 mr-3 flex-shrink-0 flex items-center justify-center ${
+                          selectedOptions.includes(option.id) 
+                            ? 'bg-blue-500 border-blue-500' 
+                            : 'border-gray-300'
+                        }`}>
+                          {selectedOptions.includes(option.id) && (
+                            <CheckCircle className="w-3 h-3 text-white" />
+                          )}
+                        </div>
+                        <span className="text-right flex-1">{option.text}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {selectedOptions.length > 0 && (
+                  <div className="bg-green-50 p-4 rounded-lg">
+                    <Bot className="inline w-6 h-6 ml-2 text-blue-500" />
+                    <span className="font-bold">בוטי אומר:</span>
+                    <p className="mt-2">
+                      {getRandomResponse('encouraging')} זיהית טעויות חשובות! 
+                      בואו נבין למה הבוט טעה כל כך.
+                    </p>
+                  </div>
+                )}
+              </div>
+            );
+          };
+
+          const ExplanationStep = () => (
+            <div className="space-y-6">
+              <h2 className="text-xl font-bold">🧠 איך בוטים באמת עובדים</h2>
+              
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <Bot className="inline w-6 h-6 ml-2 text-blue-500" />
+                <span className="font-bold">בוטי מסביר:</span>
+                <p className="mt-2">
+                  בואו נבין למה הבוט האחר טעה. זה כמו ילד שמנסה להבין סיפור 
+                  אבל הוא לא יודע את כל הכללים...
+                </p>
+              </div>
+
+              <div className="grid gap-6">
+                <div className="bg-yellow-50 p-4 rounded-lg">
+                  <h3 className="font-bold mb-3 flex items-center">
+                    <span className="ml-2">👀</span> מה הבוט "רואה" (כמו מצלמה):
+                  </h3>
+                  <ul className="space-y-2 text-sm list-disc list-inside">
+                    <li>שקית במבה, ילדים יושבים, כיתה</li>
+                    <li>יוני נכנס, יוגב מתרחק, ילדים מדברים מהר</li>
+                    <li>פרצוף של יוגב נראה עצוב</li>
+                    <li>קולות רמים (= כנראה ויכוח)</li>
+                  </ul>
+                  <div className="bg-red-100 p-3 rounded mt-3">
+                    <p className="font-bold text-red-700">בגלל זה הבוט חשב ש:</p>
+                    <p className="text-red-600 text-sm mt-1">זה סתם יום רגיל עם חטיף וקצת רעש - שום דבר מיוחד!</p>
+                  </div>
+                </div>
+
+                <div className="bg-green-50 p-4 rounded-lg">
+                  <h3 className="font-bold mb-3 flex items-center">
+                    <span className="ml-2">🎮</span> איך הבוט "חושב" (כמו משחק זיכרון):
+                  </h3>
+                  <div className="text-sm space-y-2">
+                    <p>הבוט אמר לעצמו: "אני זוכר הרבה סרטונים דומים..."</p>
+                    <ul className="space-y-1 mr-4 list-disc list-inside">
+                      <li>כמעט תמיד כשיש במבה → ילדים שמחים</li>
+                      <li>כמעט תמיד כשילד מביא חטיף → כולם אוהבים אותו</li>
+                      <li>כמעט תמיד כשילדים מתווכחים → זה נגמר מהר</li>
+                    </ul>
+                    <p>אז הוא חשב: "אה! זה כמו הסרטונים השמחים!"</p>
+                    <div className="bg-red-100 p-3 rounded mt-3">
+                      <p className="font-bold text-red-700">בגלל זה הבוט חשב ש:</p>
+                      <p className="text-red-600 text-sm mt-1">יוני עשה משהו טוב (הביא חטיף) ויוגב פשוט צריך להתגבר על זה!</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-red-50 p-4 rounded-lg">
+                  <h3 className="font-bold mb-3 flex items-center">
+                    <span className="ml-2">😵</span> איפה הבוט התבלבל:
+                  </h3>
+                  <ul className="space-y-2 text-sm list-disc list-inside">
+                    <li>חשב ש"עצוב קצת" = "יתגבר על זה מהר"</li>
+                    <li>לא הבין שיוגב מרגיש לבד (זה לא משהו שרואים במצלמה!)</li>
+                    <li>לא ידע מה קרה לפני הסרטון (ההסכמה)</li>
+                    <li>חשב שזה ויכוח רגיל, לא מצב שבו מישהו באמת נפגע</li>
+                  </ul>
+                  <div className="bg-red-100 p-3 rounded mt-3">
+                    <p className="font-bold text-red-700">בגלל כל זה הבוט חשב ש:</p>
+                    <p className="text-red-600 text-sm mt-1">המצב לא כל כך רציני ויוגב פשוט יתגבר על זה!</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-purple-50 p-4 rounded-lg">
+                <h3 className="font-bold mb-3">🤔 חשבו על זה:</h3>
+                <p className="text-sm">
+                  אם הייתם מסבירים לחבר איך לא להיות כמו הבוט הזה, מה הייתם אומרים לו?
+                </p>
+                <textarea
+                  className="w-full mt-3 p-3 border border-gray-300 rounded-lg h-20 text-sm"
+                  placeholder="רשמו את התשובה שלכם..."
+                  value={userResponses.how_to_improve || ''}
+                  onChange={(e) => updateResponse('how_to_improve', e.target.value)}
+                />
+              </div>
+            </div>
+          );
+
+          const EmotionsStep = () => {
+            const characters = [
+              { name: 'יוגב', emotions: ['בודד', 'נפגע', 'מבוכה', 'פחד', 'דחוי', 'כועס', 'עצוב', 'מתוסכל'] },
+              { name: 'יוני', emotions: ['אשם', 'מבולבל', 'מתגונן', 'לא בטוח', 'מותקף', 'עקשן', 'אדיש', 'מצדיק'] },
+              { name: 'עדי וענב', emotions: ['דואגים', 'כועסים', 'מתוסכלים', 'רוצים להגן', 'אכזבה', 'אחריות', 'נאמנות', 'צדק'] }
+            ];
+
+            return (
+              <div className="space-y-6">
+                <h2 className="text-xl font-bold">💭 הבנת רגשות אמיתיים</h2>
+                
+                <div className="bg-blue-50 p-4 rounded-lg">
+                  <Bot className="inline w-6 h-6 ml-2 text-blue-500" />
+                  <span className="font-bold">בוטי אומר:</span>
+                  <p className="mt-2">
+                    עכשיו שאנחנו יודעים שהבוט טעה, בואו נבין מה באמת הרגישו הדמויות.
+                    בחרו רגשות מדויקים יותר מ"פשוט עצוב" או "פשוט כועס":
+                  </p>
+                </div>
+
+                {characters.map((character) => (
+                  <div key={character.name} className="bg-white p-4 border border-gray-200 rounded-lg">
+                    <h3 className="font-bold mb-3 text-lg">
+                      {character.name === 'עדי וענב' ? '👥' : '👤'} מה {character.name} באמת הרגיש/ו?
+                    </h3>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                      {character.emotions.map(emotion => {
+                        const isSelected = (userResponses[`emotions_${character.name}`] || []).includes(emotion);
+                        return (
+                          <button
+                            key={emotion}
+                            onClick={() => {
+                              const current = userResponses[`emotions_${character.name}`] || [];
+                              const updated = isSelected 
+                                ? current.filter(e => e !== emotion)
+                                : [...current, emotion];
+                              updateResponse(`emotions_${character.name}`, updated);
+                            }}
+                            className={`p-2 text-sm rounded-lg border transition-colors ${
+                              isSelected 
+                                ? 'bg-blue-500 text-white border-blue-500' 
+                                : 'bg-gray-50 border-gray-200 hover:border-gray-300'
+                            }`}
+                          >
+                            {emotion}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+
+                <div className="bg-yellow-50 p-4 rounded-lg">
+                  <h3 className="font-bold mb-3">💝 תרגיל אמפתיה:</h3>
+                  <p className="mb-3 text-sm">
+                    בחרו דמות אחת וכתבו מכתב קצר מנקודת המבט שלה - מה היא באמת מרגישה?
+                  </p>
+                  <select 
+                    className="w-full p-2 border border-gray-300 rounded mb-3"
+                    value={userResponses.empathy_character || ''}
+                    onChange={(e) => updateResponse('empathy_character', e.target.value)}
+                  >
+                    <option value="">בחרו דמות...</option>
+                    <option value="יוגב">יוגב</option>
+                    <option value="יוני">יוני</option>
+                    <option value="עדי וענב">עדי וענב</option>
+                  </select>
+                  <textarea
+                    className="w-full p-3 border border-gray-300 rounded-lg h-24 text-sm"
+                    placeholder="כתבו כאן את המכתב מנקודת המבט של הדמות..."
+                    value={userResponses.empathy_letter || ''}
+                    onChange={(e) => updateResponse('empathy_letter', e.target.value)}
+                  />
+                </div>
+              </div>
+            );
+          };
+
+          const PromptPracticeStep = () => (
+            <div className="space-y-6">
+              <h2 className="text-xl font-bold">✍️ כתיבת פרומפט טוב יותר</h2>
+              
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <Bot className="inline w-6 h-6 ml-2 text-blue-500" />
+                <span className="font-bold">בוטי אומר:</span>
+                <p className="mt-2">
+                  הפרומפט המקורי שניתן לבוט היה: "תסתכל על הסרטון הזה ותגיד לי מה לעשות". 
+                  בואו נכתוב פרומפט טוב יותר שיעזור לבוט להבין את המצב.
+                </p>
+              </div>
+
+              <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                <h3 className="font-bold text-red-700 mb-3">❌ למה הפרומפט המקורי לא טוב?</h3>
+                <div className="space-y-2 text-sm">
+                  {[ 'לא נתן הקשר', 'לא הסביר על הרגשות המורכבים', 'לא הזהיר לגבי הסכנה הבריאותית', 'לא ביקש תוצאה ספציפית', 'לא הזכיר את ההסכמה שהופרה' ].map((problem, index) => (
+                    <div key={index} className="flex items-center">
+                      <XCircle className="w-4 h-4 text-red-500 ml-2" />
+                      <span>{problem}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-purple-50 p-4 rounded-lg">
+                <h3 className="font-bold mb-3">📝 כללי זהב לפרומפטים טובים:</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                    <div className="flex items-center"><CheckCircle className="w-4 h-4 text-green-500 ml-2" /><span>תנו הקשר מלא (מה קרה לפני)</span></div>
+                    <div className="flex items-center"><CheckCircle className="w-4 h-4 text-green-500 ml-2" /><span>הסבירו את כל הדמויות והרגשות</span></div>
+                    <div className="flex items-center"><CheckCircle className="w-4 h-4 text-green-500 ml-2" /><span>הדגישו סכנות או מידע חשוב</span></div>
+                    <div className="flex items-center"><CheckCircle className="w-4 h-4 text-green-500 ml-2" /><span>בקשו במדויק מה אתם רוצים</span></div>
+                </div>
+              </div>
+              
+              <div className="bg-yellow-50 p-4 rounded-lg">
+                <h3 className="font-bold mb-3">🎯 עכשיו התור שלכם!</h3>
+                <p className="mb-3 text-sm">כתבו פרומפט טוב יותר, שיכלול את כל הפרטים החשובים:</p>
+                <textarea
+                  className="w-full p-4 border border-gray-300 rounded-lg h-32 text-sm"
+                  placeholder="כתבו כאן את הפרומפט המשופר שלכם..."
+                  value={userResponses.improved_prompt || ''}
+                  onChange={(e) => updateResponse('improved_prompt', e.target.value)}
+                />
+                {userResponses.improved_prompt && (
+                  <div className="mt-4 bg-green-50 p-3 rounded border border-green-200">
+                    <Bot className="inline w-5 h-5 ml-2 text-blue-500" />
+                    <span className="font-bold text-sm">בוטי אומר:</span>
+                    <p className="mt-2 text-sm">
+                      {getRandomResponse('encouraging')} פרומפט מעולה! 
+                      הוספת הקשר חשוב ופרטים על רגשות. זה יעזור לבוט להבין טוב יותר!
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+
+          const BiasGameStep = () => {
+            const biases = [
+              { id: 'majority', name: 'חשיבה של "רוב מנצח"', example: 'רוב הילדים רוצים במבה אז זה בסדר', explanation: 'הבוט חשב שאם רוב הילדים רוצים משהו, אז זה טוב לכולם - גם למי שזה מזיק לו!' },
+              { id: 'victim_blame', name: 'להאשים את הנפגע', example: 'יוגב צריך להביא אוכל משלו', explanation: 'הבוט האשים את יוגב (שנפגע) במקום את יוני (שעשה משהו לא נכון)' },
+              { id: 'minimize_health', name: 'לא מבין כמה זה מסוכן', example: 'אלרגיה זה לא כזה נורא', explanation: 'הבוט לא הבין שאלרגיה יכולה להיות מסוכנת ואפילו קטלנית!' },
+              { id: 'ignore_agreement', name: 'שוכח הסכמות', example: 'לא זכר שהכיתה הסכימה לא להביא במבה', explanation: 'הבוט לא זכר את ההסכמה שהיתה לפני כן - כאילו היא לא קיימת' }
+            ];
+
+            const selectedBiases = userResponses.identified_biases || [];
+            
+            const toggleBias = (biasId) => {
+              const current = selectedBiases.includes(biasId);
+              const updated = current ? selectedBiases.filter(id => id !== biasId) : [...selectedBiases, biasId];
+              updateResponse('identified_biases', updated);
+            };
+
+            return (
+              <div className="space-y-6">
+                <h2 className="text-xl font-bold">🎭 משחק מציאת הטעויות</h2>
+                <div className="bg-blue-50 p-4 rounded-lg">
+                  <Bot className="inline w-6 h-6 ml-2 text-blue-500" />
+                  <span className="font-bold">בוטי אומר:</span>
+                  <p className="mt-2">בוטים לפעמים חושבים בצורה לא הוגנת - כמו ילד שמחליט דברים בלי לחשוב על כולם. בואו נמצא את הטעויות האלה בתשובת הבוט האחר:</p>
+                </div>
+                <div className="space-y-4">
+                  {biases.map(bias => (
+                    <div key={bias.id} className={`p-4 border-2 rounded-lg cursor-pointer transition-colors ${ selectedBiases.includes(bias.id) ? 'border-red-400 bg-red-50' : 'border-gray-200 hover:border-gray-300 bg-white' }`} onClick={() => toggleBias(bias.id)}>
+                      <div className="flex items-start">
+                        <div className={`w-6 h-6 rounded border-2 mr-3 mt-1 flex-shrink-0 flex items-center justify-center ${ selectedBiases.includes(bias.id) ? 'bg-red-500 border-red-500' : 'border-gray-300' }`}>
+                          {selectedBiases.includes(bias.id) && (<AlertTriangle className="w-4 h-4 text-white" />)}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-bold text-lg mb-2">{bias.name}</h3>
+                          <p className="text-sm text-gray-600 mb-2"><strong>דוגמה:</strong> "{bias.example}"</p>
+                          <p className="text-sm text-gray-800"><strong>הסבר:</strong> {bias.explanation}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {selectedBiases.length > 0 && (
+                  <div className="bg-green-50 p-4 rounded-lg">
+                    <Bot className="inline w-6 h-6 ml-2 text-blue-500" />
+                    <span className="font-bold">בוטי אומר:</span>
+                    <p className="mt-2">{getRandomResponse('encouraging')} זיהית {selectedBiases.length} טעויות! זה חשוב כדי לדעת מתי לא לסמוך על בוט.</p>
+                  </div>
+                )}
+                <div className="bg-yellow-50 p-4 rounded-lg">
+                  <h3 className="font-bold mb-3">🛡️ איך נמנע מטעויות כאלה?</h3>
+                  <p className="mb-3 text-sm">כתבו כלל אחד שיעזור לבוטים (ולבני אדם!) לחשוב בצורה יותר הוגנת:</p>
+                  <textarea className="w-full p-3 border border-gray-300 rounded-lg h-20 text-sm" placeholder="רשמו את הכלל שלכם..." value={userResponses.bias_prevention_rule || ''} onChange={(e) => updateResponse('bias_prevention_rule', e.target.value)} />
+                </div>
+              </div>
+            );
+          };
+
+          const ReflectionStep = () => (
+            <div className="space-y-6">
+              <h2 className="text-xl font-bold">🌟 סיכום ומחשבות</h2>
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <Bot className="inline w-6 h-6 ml-2 text-blue-500" />
+                <span className="font-bold">בוטי אומר:</span>
+                <p className="mt-2">{userName ? `${userName}, ` : ''}עשית עבודה נהדרת! בואו נסכם מה למדנו יחד:</p>
+              </div>
+              <div className="space-y-6">
+                <div className="bg-white p-4 border border-gray-200 rounded-lg">
+                  <h3 className="font-bold mb-3 flex items-center"><Bot className="ml-2"/> על בינה מלאכותית למדתי ש...</h3>
+                  <div className="space-y-3">
+                    <div><label className="block text-sm font-medium mb-1">בוט יכול לעזור לי ב_______ אבל לא יכול _______</label><input type="text" className="w-full p-2 border border-gray-300 rounded text-sm" placeholder="השלימו את המשפט..." value={userResponses.ai_learning_1 || ''} onChange={(e) => updateResponse('ai_learning_1', e.target.value)} /></div>
+                    <div><label className="block text-sm font-medium mb-1">הדבר הכי מסוכן בהסתמכות על בוט הוא _______</label><input type="text" className="w-full p-2 border border-gray-300 rounded text-sm" placeholder="השלימו את המשפט..." value={userResponses.ai_learning_2 || ''} onChange={(e) => updateResponse('ai_learning_2', e.target.value)} /></div>
+                    <div><label className="block text-sm font-medium mb-1">לפני שאני מקבל עצה מבוט אני תמיד צריך _______</label><input type="text" className="w-full p-2 border border-gray-300 rounded text-sm" placeholder="השלימו את המשפט..." value={userResponses.ai_learning_3 || ''} onChange={(e) => updateResponse('ai_learning_3', e.target.value)} /></div>
+                  </div>
+                </div>
+                <div className="bg-white p-4 border border-gray-200 rounded-lg">
+                  <h3 className="font-bold mb-3 flex items-center"><Heart className="ml-2"/> על להיות חבר טוב למדתי ש...</h3>
+                  <div className="space-y-3">
+                    <div><label className="block text-sm font-medium mb-1">כשמישהו נראה בסדר מבחוץ, יכול להיות ש_______</label><input type="text" className="w-full p-2 border border-gray-300 rounded text-sm" placeholder="השלימו את המשפט..." value={userResponses.friendship_learning_1 || ''} onChange={(e) => updateResponse('friendship_learning_1', e.target.value)} /></div>
+                    <div><label className="block text-sm font-medium mb-1">לפני שאני מחליט משהו, חשוב לחשוב על _______</label><input type="text" className="w-full p-2 border border-gray-300 rounded text-sm" placeholder="השלימו את המשפט..." value={userResponses.friendship_learning_2 || ''} onChange={(e) => updateResponse('friendship_learning_2', e.target.value)} /></div>
+                    <div><label className="block text-sm font-medium mb-1">ההבדל בין לעזור למישהו לבין לפגוע בו הוא _______</label><input type="text" className="w-full p-2 border border-gray-300 rounded text-sm" placeholder="השלימו את המשפט..." value={userResponses.friendship_learning_3 || ''} onChange={(e) => updateResponse('friendship_learning_3', e.target.value)} /></div>
+                  </div>
+                </div>
+                <div className="bg-yellow-50 p-4 rounded-lg">
+                  <h3 className="font-bold mb-3 flex items-center">🎯 הדבר הכי חשוב שאני לוקח מהשיחה היום:</h3>
+                  <textarea className="w-full p-3 border border-gray-300 rounded-lg h-24 text-sm" placeholder="כתבו משפט אחד שיעזור לכם לזכור מה למדתם..." value={userResponses.main_takeaway || ''} onChange={(e) => updateResponse('main_takeaway', e.target.value)} />
+                </div>
+              </div>
+              <div className="bg-green-50 p-4 rounded-lg">
+                <Bot className="inline w-6 h-6 ml-2 text-blue-500" />
+                <span className="font-bold">בוטי אומר:</span>
+                <p className="mt-2">🎉 כל הכבוד! סיימת את המסע שלנו. עכשיו אתה יודע:</p>
+                <ul className="mt-3 space-y-1 text-sm mr-6 list-disc list-inside">
+                  <li>איך בוטים עובדים ואיפה הם יכולים לטעות</li>
+                  <li>איך לכתוב פרומפטים טובים</li>
+                  <li>איך לזהות הטיות בתשובות</li>
+                  <li>איך להבין רגשות מורכבים של אחרים</li>
+                  <li>מתי חשוב לשאול מבוגר</li>
+                </ul>
+                <p className="mt-3 text-sm font-medium">זכור: בינה מלאכותית היא כלי מדהים, אבל הלב והמוח שלך הם הכלים הכי חשובים! 💙🧠</p>
+              </div>
+              <div className="bg-purple-50 p-4 rounded-lg">
+                <h3 className="font-bold mb-3">📚 מטלת בית:</h3>
+                <ul className="space-y-2 text-sm list-disc list-inside">
+                  <li>שתפו מבוגר בבית על מה שלמדתם היום על בוטים</li>
+                  <li>אם אתם משתמשים בבוט השבוע - בדקו את התשובה עם הכלים שלמדנו</li>
+                  <li>חפשו דוגמה אחת (בחדשות/ברשת) של בוט שטעה</li>
+                </ul>
+              </div>
+            </div>
+          );
+
+          // --- Core Logic ---
+
+          const renderStep = () => {
+            const step = steps[currentStep];
+            switch(step.type) {
+              case 'intro': return <IntroStep />;
+              case 'video': return <VideoStep />;
+              case 'open_question': return <OpenQuestionStep />;
+              case 'bot_response': return <BotResponseStep />;
+              case 'multiple_choice': return <MultipleChoiceStep />;
+              case 'explanation': return <ExplanationStep />;
+              case 'emotions': return <EmotionsStep />;
+              case 'prompt_practice': return <PromptPracticeStep />;
+              case 'bias_game': return <BiasGameStep />;
+              case 'reflection': return <ReflectionStep />;
+              default: return <div>שלב לא נמצא</div>;
+            }
+          };
+
+          const nextStep = () => {
+            if (currentStep < steps.length - 1) {
+              setCurrentStep(currentStep + 1);
+              window.scrollTo(0, 0);
+            }
+          };
+
+          const prevStep = () => {
+            if (currentStep > 0) {
+              setCurrentStep(currentStep - 1);
+              window.scrollTo(0, 0);
+            }
+          };
+
+          const canProceed = () => {
+            const step = steps[currentStep];
+            switch(step.id) {
+              case 'welcome': return userName.trim().length > 0;
+              case 'video': return showVideo;
+              case 'initial_reaction': return userResponses.initial_reaction && userResponses.initial_reaction.trim().length > 0;
+              case 'spot_errors': return userResponses.spot_errors && userResponses.spot_errors.length > 0;
+              default: return true;
+            }
+          };
+
+          // --- Main Render ---
+
+          return (
+            <div className="max-w-4xl mx-auto p-4 sm:p-6 min-h-screen">
+              <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6 sticky top-0 z-10">
+                <div className="flex items-center justify-between mb-4">
+                  <h1 className="text-xl sm:text-2xl font-bold text-blue-800 flex items-center">
+                    <Bot className="w-8 h-8 ml-3" />
+                    כשהבוט לא הבין את הרגשות
+                  </h1>
+                  <div className="text-sm text-gray-600">
+                    שלב {currentStep + 1} מתוך {steps.length}
+                  </div>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div 
+                    className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                    style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6">
+                {renderStep()}
+              </div>
+
+              <div className="flex justify-between items-center">
+                <button
+                  onClick={prevStep}
+                  disabled={currentStep === 0}
+                  className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
+                    currentStep === 0 
+                      ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+                      : 'bg-gray-500 text-white hover:bg-gray-600'
+                  }`}
+                >
+                  <ChevronRight className="w-4 h-4 ml-2" />
+                  חזור
+                </button>
+                <div className="text-center">
+                  <div className="text-sm text-gray-600 mb-1">
+                    {steps[currentStep].title}
+                  </div>
+                </div>
+                <button
+                  onClick={nextStep}
+                  disabled={!canProceed()}
+                  className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
+                    !canProceed()
+                      ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+                      : 'bg-blue-500 text-white hover:bg-blue-600'
+                  }`}
+                >
+                  {currentStep === steps.length - 1 ? 'סיום 🎉' : 'המשך'}
+                  {currentStep < steps.length - 1 && <ChevronRight className="w-4 h-4 mr-2 scale-x-[-1]" />}
+                </button>
+              </div>
+
+              <div className="fixed bottom-4 left-4">
+                <button className="bg-red-500 text-white p-3 rounded-full shadow-lg hover:bg-red-600" title="כפתור מצוקה - לחץ אם אתה צריך עזרה ממבוגר">
+                  <AlertTriangle className="w-6 h-6" />
+                </button>
+              </div>
+            </div>
+          );
+        };
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<InteractiveAIBot />);
+    </script>
+</body>
+</html>
